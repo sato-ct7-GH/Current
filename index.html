@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>電流と抵抗 学習クイズ</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font-family:'Helvetica Neue',Arial,'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;
+      background:#edf2f7;color:#1a202c;min-height:100vh;
+    }
+
+    /* ===== ヘッダー ===== */
+    header{
+      background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 100%);
+      color:#fff;padding:14px 18px 12px;text-align:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);
+    }
+    .hdr-school{font-size:11px;opacity:.75;margin-bottom:4px;letter-spacing:.5px;}
+    .hdr-title{font-size:19px;font-weight:700;letter-spacing:.5px;}
+    .hdr-sub{font-size:12px;opacity:.8;margin-top:4px;min-height:1em;}
+
+    /* ===== セクションタブ ===== */
+    .tabs{
+      display:flex;background:#1e3a8a;
+      overflow-x:auto;-webkit-overflow-scrolling:touch;
+    }
+    .tab{
+      flex:1;min-width:60px;padding:10px 4px;text-align:center;
+      font-size:13px;font-weight:600;color:rgba(255,255,255,.5);
+      cursor:pointer;border-bottom:3px solid transparent;
+      transition:all .2s;user-select:none;white-space:nowrap;
+    }
+    .tab.active{color:#fbbf24;border-bottom-color:#fbbf24;}
+    .tab.disabled{opacity:.3;cursor:not-allowed;}
+
+    /* ===== メイン ===== */
+    .main{max-width:600px;margin:0 auto;padding:14px 13px 70px;}
+
+    /* ===== モード切替 ===== */
+    .mode-row{
+      display:flex;background:#fff;border-radius:10px;
+      overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1);margin-bottom:14px;
+    }
+    .mode-btn{
+      flex:1;padding:11px 8px;border:none;background:#fff;
+      color:#6b7280;font-size:14px;font-weight:500;
+      cursor:pointer;font-family:inherit;transition:all .2s;
+    }
+    .mode-btn.active{background:#2563eb;color:#fff;}
+
+    /* ===== 自習モード ===== */
+    .prog-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+    .prog-bar{flex:1;height:5px;background:#cbd5e1;border-radius:3px;}
+    .prog-fill{height:100%;background:#2563eb;border-radius:3px;transition:width .35s ease;}
+    .prog-text{font-size:12px;color:#64748b;white-space:nowrap;}
+    .score-row{text-align:right;font-size:13px;color:#64748b;margin-bottom:12px;}
+
+    .q-card{
+      background:#fff;border-radius:12px;padding:18px 20px;
+      margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.09);
+      border-left:4px solid #2563eb;
+    }
+    .q-num{font-size:11px;font-weight:700;color:#2563eb;margin-bottom:7px;letter-spacing:.5px;}
+    .q-img{display:block;max-width:33%;height:auto;border-radius:8px;margin-bottom:12px;border:1px solid #e2e8f0;}
+    .q-text{font-size:15px;line-height:1.75;}
+
+    .choices{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+    .choice-btn{
+      width:100%;padding:12px 16px;background:#fff;
+      border:2px solid #e2e8f0;border-radius:8px;cursor:pointer;
+      font-size:14px;text-align:left;color:#374151;
+      transition:all .15s;font-family:inherit;line-height:1.6;
+    }
+    .choice-btn:hover:not(:disabled){border-color:#93c5fd;background:#eff6ff;}
+    .choice-btn.correct{border-color:#34d399;background:#ecfdf5;color:#065f46;font-weight:600;}
+    .choice-btn.wrong{border-color:#f87171;background:#fef2f2;color:#991b1b;}
+    .choice-btn:disabled{cursor:default;}
+
+    .feedback{
+      padding:12px 16px;border-radius:8px;font-size:13px;
+      line-height:1.65;display:none;margin-bottom:12px;
+    }
+    .feedback.ok{display:block;background:#ecfdf5;border:1px solid #6ee7b7;color:#065f46;}
+    .feedback.ng{display:block;background:#fef2f2;border:1px solid #fca5a5;color:#991b1b;}
+    .fb-expl{display:inline-block;margin-top:6px;font-weight:400;color:#78350f;}
+
+    .next-btn{
+      width:100%;padding:13px;background:#2563eb;color:#fff;
+      border:none;border-radius:8px;font-size:15px;font-weight:600;
+      cursor:pointer;font-family:inherit;transition:background .2s;
+    }
+    .next-btn:hover{background:#1e3a8a;}
+
+    /* ===== 結果画面 ===== */
+    .result-card{
+      background:#fff;border-radius:16px;padding:40px 24px;
+      text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.1);
+    }
+    .result-emoji{font-size:56px;margin-bottom:14px;}
+    .result-score{font-size:56px;font-weight:800;color:#2563eb;line-height:1;}
+    .result-total{font-size:17px;color:#64748b;margin-bottom:6px;}
+    .result-pct{font-size:28px;font-weight:700;color:#374151;margin-bottom:28px;}
+    .retry-btn{
+      padding:12px 36px;background:#2563eb;color:#fff;border:none;
+      border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;
+    }
+    .retry-btn:hover{background:#1e3a8a;}
+
+    /* ===== 送信モード ===== */
+    .name-card{
+      background:#fff;border-radius:12px;padding:16px 20px;
+      margin-bottom:13px;box-shadow:0 1px 4px rgba(0,0,0,.08);
+    }
+    .name-label{font-size:13px;font-weight:600;color:#374151;margin-bottom:8px;display:block;}
+    .name-input{
+      width:100%;padding:10px 14px;border:2px solid #e2e8f0;
+      border-radius:8px;font-size:15px;font-family:inherit;
+      outline:none;color:#1a202c;transition:border-color .2s;
+    }
+    .name-input:focus{border-color:#2563eb;}
+
+    .sub-q{
+      background:#fff;border-radius:10px;padding:14px 16px;
+      margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.07);
+    }
+    .sub-q-num{font-size:11px;font-weight:700;color:#2563eb;margin-bottom:5px;}
+    .sub-q-text{font-size:14px;line-height:1.65;margin-bottom:10px;}
+    .radio-group{display:flex;flex-direction:column;gap:5px;}
+    .radio-label{
+      display:flex;align-items:flex-start;gap:10px;
+      padding:7px 12px;border:1px solid #e5e7eb;border-radius:6px;
+      cursor:pointer;font-size:13px;color:#374151;
+      line-height:1.55;transition:background .15s;
+    }
+    .radio-label:hover{background:#f9fafb;}
+    .radio-label input[type="radio"]{margin-top:3px;flex-shrink:0;accent-color:#2563eb;}
+
+    .submit-btn{
+      width:100%;padding:14px;background:#059669;color:#fff;border:none;
+      border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;
+      font-family:inherit;margin-bottom:14px;transition:background .2s;
+    }
+    .submit-btn:hover{background:#047857;}
+    .submit-btn:disabled{background:#9ca3af;cursor:not-allowed;}
+
+    .sub-result{
+      padding:16px;border-radius:10px;text-align:center;
+      margin-bottom:16px;font-size:14px;line-height:1.8;
+    }
+    .sub-result.ok{background:#ecfdf5;border:1px solid #6ee7b7;color:#065f46;}
+    .sub-result.warn{background:#fffbeb;border:1px solid #fcd34d;color:#92400e;}
+
+    /* ===== 送信モード 解説・最終画面 ===== */
+    .sm-explanation{
+      display:flex;gap:10px;align-items:flex-start;
+      background:#fffbeb;border:1px solid #fcd34d;
+      border-radius:8px;padding:12px 14px;
+      font-size:13px;line-height:1.7;color:#78350f;
+      margin-bottom:12px;
+    }
+    .sm-expl-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+    .sm-final-card{
+      background:#fff;border-radius:16px;padding:36px 24px;
+      text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.1);
+    }
+    .sm-final-icon{font-size:52px;margin-bottom:12px;}
+    .sm-final-title{font-size:17px;font-weight:700;color:#1a202c;margin-bottom:6px;}
+    .sm-final-name{font-size:15px;color:#2563eb;font-weight:600;margin-bottom:20px;}
+    .sm-start-btn{
+      width:100%;padding:13px;background:#2563eb;color:#fff;border:none;
+      border-radius:8px;font-size:15px;font-weight:600;
+      cursor:pointer;font-family:inherit;margin-bottom:0;
+      transition:background .2s;
+    }
+    .sm-start-btn:hover{background:#1e3a8a;}
+
+    /* ===== 準備中 ===== */
+    .coming-card{
+      background:#fff;border-radius:16px;padding:50px 24px;
+      text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.08);color:#6b7280;
+    }
+    .coming-icon{font-size:48px;margin-bottom:14px;}
+    .coming-title{font-size:18px;font-weight:600;color:#374151;margin-bottom:8px;}
+    .coming-text{font-size:14px;}
+
+    /* ===== 学習順/ランダム切替 ===== */
+    .order-row{
+      display:flex;align-items:center;gap:6px;margin-bottom:10px;
+    }
+    .order-label{font-size:12px;color:#64748b;margin-right:2px;white-space:nowrap;}
+    .order-btn{
+      padding:5px 14px;border-radius:20px;border:1.5px solid #cbd5e1;
+      background:#fff;color:#64748b;font-size:12px;font-weight:600;
+      cursor:pointer;font-family:inherit;transition:all .2s;
+    }
+    .order-btn.active{background:#2563eb;border-color:#2563eb;color:#fff;}
+    .order-btn:hover:not(.active){background:#f1f5f9;border-color:#93c5fd;}
+
+    /* KaTeX調整 */
+    .katex{font-size:1em;}
+    .katex-display{margin:.3em 0;}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-school">神奈川県立湘南高等学校　物理</div>
+  <div class="hdr-title">⚡ 電流と抵抗 学習クイズ</div>
+  <div class="hdr-sub" id="hdrSub"></div>
+</header>
+
+<div class="tabs" id="tabs"></div>
+
+<div class="main">
+  <div class="mode-row">
+    <button class="mode-btn" id="modeStudy" onclick="setMode('study')">📖 自習モード</button>
+    <button class="mode-btn" id="modeSubmit" onclick="setMode('submit')">📤 送信モード</button>
+  </div>
+  <div id="content"></div>
+</div>
+
+<script>
+// ============================================================
+// データ定義
+// choices[0] が常に正解。表示時にシャッフルする。
+// ============================================================
+
+const SECTIONS = [
+  {
+    id: 1,
+    label: "基本①",
+    subtitle: "電流の定義・オームの法則・抵抗",
+    available: true,
+    questions: [
+      {
+        id: 1,
+        text: "電流の記号として正しいものはどれか。",
+        choices: ["I", "V", "R", "Q"]
+      },
+      {
+        id: 2,
+        text: "電流の単位として正しいものはどれか。",
+        choices: ["A", "V", "\\(\\Omega\\)", "W"]
+      },
+      {
+        id: 3,
+        text: "電流の定義として正しいものはどれか。",
+        choices: [
+          "ある断面を単位時間に通過する電気量",
+          "ある断面を単位時間に通過する仕事",
+          "単位面積を通過する電気量",
+          "単位体積中の自由電子の数"
+        ]
+      },
+      {
+        id: 4,
+        text: "\\(\\Delta t\\) 秒の間に断面積 \\(S\\) の導体の断面を電気量 \\(Q\\,\\mathrm{[C]}\\) が通過したときの電流 \\(I\\) を表す式はどれか。",
+        choices: [
+          "\\(I = \\dfrac{Q}{\\Delta t}\\)",
+          "\\(I = Q\\Delta t\\)",
+          "\\(I = \\dfrac{\\Delta t}{Q}\\)",
+          "\\(I = \\dfrac{Q}{S\\Delta t}\\)"
+        ]
+      },
+      {
+        id: 5,
+        text: "電子の電気量 \\(e\\)、速さ \\(v\\)、単位体積あたりの電子の個数 \\(n\\)、導体の断面積 \\(S\\) であるときの電流の強さ \\(I\\) を表す式はどれか。",
+        choices: [
+          "\\(I = envS\\)",
+          "\\(I = \\dfrac{env}{S}\\)",
+          "\\(I = \\dfrac{enS}{v}\\)",
+          "\\(I = enS\\)"
+        ]
+      },
+      {
+        id: 6,
+        text: "電圧 \\(V\\) を長さ \\(L\\)、断面積 \\(S\\) の導体に加えたところ、導体には一定の大きさの電流が流れた。このとき、導体内の電子は一定の速さ \\(v\\) で運動していたと考える。導体内にできている一様電場 \\(E\\) の大きさを、\\(V\\)、\\(L\\) を用いて表す式はどれか。",
+        choices: [
+          "\\(E = \\dfrac{V}{L}\\)",
+          "\\(E = VL\\)",
+          "\\(E = \\dfrac{L}{V}\\)",
+          "\\(E = \\dfrac{V^2}{L}\\)"
+        ]
+      },
+      {
+        id: 7,
+        text: "この一様電場 \\(\\dfrac{V}{L}\\) から電気量 \\(-e\\) の電子は力を受ける。その力の大きさを表す式はどれか。",
+        choices: [
+          "\\(\\dfrac{eV}{L}\\)",
+          "\\(eVL\\)",
+          "\\(\\dfrac{V}{eL}\\)",
+          "\\(\\dfrac{e^2V}{L}\\)"
+        ]
+      },
+      {
+        id: 8,
+        text: "電子は電場から \\(\\dfrac{eV}{L}\\) の力を受けるが、導体中の陽イオン（原子核と考えてもよい）から抵抗力も受けるため、電子にはたらく力はつりあっている。この抵抗力は電子の速さ \\(v\\) に比例し、比例定数を \\(k\\) とすると、速さ \\(v\\) を表す式はどれか。",
+        choices: [
+          "\\(v = \\dfrac{eV}{kL}\\)",
+          "\\(v = \\dfrac{ekL}{V}\\)",
+          "\\(v = \\dfrac{kLV}{e}\\)",
+          "\\(v = \\dfrac{eL}{kV}\\)"
+        ]
+      },
+      {
+        id: 9,
+        text: "単位体積中に \\(n\\) 個の電子をもつ導体中の電流の大きさは \\(I = envS\\) であるから、\\(v = \\dfrac{eV}{kL}\\) を代入すると、電流 \\(I\\) を表す式はどれか。",
+        choices: [
+          "\\(I = \\dfrac{e^2nVS}{kL}\\)",
+          "\\(I = \\dfrac{enVS}{kL}\\)",
+          "\\(I = \\dfrac{e^2nV}{kLS}\\)",
+          "\\(I = \\dfrac{e^2nVS}{k}\\)"
+        ]
+      },
+      {
+        id: 10,
+        text: "以上より、電圧は \\(V = [\\text{ア}]\\,I\\) と表される。\\([\\text{ア}]\\) に入る文字式はどれか。",
+        choices: [
+          "\\(\\dfrac{kL}{e^2nS}\\)",
+          "\\(\\dfrac{e^2nS}{kL}\\)",
+          "\\(kLe^2nS\\)",
+          "\\(\\dfrac{kL}{enS}\\)"
+        ]
+      },
+      {
+        id: 11,
+        text: "\\(V = \\dfrac{kL}{e^2nS}\\,I\\) より、導体にかかる電圧と導体に流れる電流の関係はどれか。",
+        choices: [
+          "比例する",
+          "反比例する",
+          "電流の2乗に比例する",
+          "無関係である"
+        ]
+      },
+      {
+        id: 12,
+        text: "\\(V = \\dfrac{kL}{e^2nS}\\,I\\) において、\\(\\dfrac{kL}{e^2nS}\\) を \\(R\\) と置くとき、\\(R\\) を何というか。",
+        choices: [
+          "電気抵抗",
+          "抵抗率",
+          "コンダクタンス",
+          "静電容量"
+        ]
+      },
+      {
+        id: 13,
+        text: "電気抵抗の記号として正しいものはどれか。",
+        choices: ["R", "I", "V", "Q"]
+      },
+      {
+        id: 14,
+        text: "電気抵抗の主な単位として正しいものはどれか。",
+        choices: ["\\(\\Omega\\)", "\\(\\Phi\\)", "\\(\\Sigma\\)", "\\(\\Delta\\)"]
+      },
+      {
+        id: 15,
+        text: "単位長さ・単位断面積あたりの抵抗を抵抗率 \\(\\rho\\) という。\\(R = \\dfrac{kL}{e^2nS}\\) より、抵抗率 \\(\\rho\\) を \\(k\\)、\\(n\\)、\\(e\\) を用いて表す式はどれか。",
+        choices: [
+          "\\(\\rho = \\dfrac{k}{e^2n}\\)",
+          "\\(\\rho = \\dfrac{e^2n}{k}\\)",
+          "\\(\\rho = ke^2n\\)",
+          "\\(\\rho = \\dfrac{kL}{e^2nS}\\)"
+        ]
+      },
+      {
+        id: 16,
+        text: "抵抗 \\(R\\) に電圧 \\(V\\) をかけ電流 \\(I\\) が流れた。このときに成り立つオームの法則を表す式はどれか。",
+        choices: [
+          "\\(V = RI\\)",
+          "\\(I = RV\\)",
+          "\\(R = VI\\)",
+          "\\(V = \\dfrac{I}{R}\\)"
+        ]
+      },
+      {
+        id: 17,
+        text: "抵抗 \\(R\\) の導体がある。同じ材質・同じ長さで、導体の断面積が2倍になったときの抵抗の大きさは、もとの何倍になるか。",
+        choices: [
+          "\\(\\dfrac{1}{2}\\) 倍",
+          "2 倍",
+          "4 倍",
+          "\\(\\dfrac{1}{4}\\) 倍"
+        ]
+      },
+      {
+        id: 18,
+        text: "抵抗率の単位として正しいものはどれか。",
+        choices: [
+          "\\(\\Omega\\cdot\\mathrm{m}\\)",
+          "\\(\\Omega\\)",
+          "\\(\\Omega/\\mathrm{m}\\)",
+          "\\(\\Omega\\cdot\\mathrm{m}^2\\)"
+        ]
+      },
+      {
+        id: 19,
+        text: "0℃の抵抗率を \\(\\rho_0\\) とする。抵抗率の温度係数を \\(\\alpha\\)、セルシウス温度を \\(t\\) とするとき、\\(t\\)℃における抵抗率 \\(\\rho\\) を表す式はどれか。",
+        choices: [
+          "\\(\\rho = \\rho_0(1+\\alpha t)\\)",
+          "\\(\\rho = \\rho_0(1-\\alpha t)\\)",
+          "\\(\\rho = \\rho_0\\,\\alpha t\\)",
+          "\\(\\rho = \\dfrac{\\rho_0}{1+\\alpha t}\\)"
+        ]
+      },
+      {
+        id: 20,
+        text: "抵抗値 \\(R_1\\) と \\(R_2\\) の抵抗を直列つなぎするとき、それぞれにかかる電圧の比 \\(V_1:V_2\\) はどれか。",
+        choices: [
+          "\\(R_1:R_2\\)",
+          "\\(R_2:R_1\\)",
+          "\\(1:1\\)"
+        ]
+      },
+      {
+        id: 21,
+        text: "抵抗値 \\(R_1\\) と \\(R_2\\) の抵抗を直列つなぎするとき、それぞれに流れる電流の比 \\(I_1:I_2\\) はどれか。",
+        choices: [
+          "\\(1:1\\)",
+          "\\(R_1:R_2\\)",
+          "\\(R_2:R_1\\)"
+        ]
+      },
+      {
+        id: 22,
+        text: "抵抗値 \\(R_1\\) と \\(R_2\\) の抵抗を並列つなぎするとき、それぞれにかかる電圧の比 \\(V_1:V_2\\) はどれか。",
+        choices: [
+          "\\(1:1\\)",
+          "\\(R_2:R_1\\)",
+          "\\(R_1:R_2\\)"
+        ]
+      },
+      {
+        id: 23,
+        text: "抵抗値 \\(R_1\\) と \\(R_2\\) の抵抗を並列つなぎするとき、それぞれに流れる電流の比 \\(I_1:I_2\\) はどれか。",
+        choices: [
+          "\\(R_2:R_1\\)",
+          "\\(R_1:R_2\\)",
+          "\\(1:1\\)"
+        ]
+      },
+      {
+        id: 24,
+        text: "抵抗値 \\(R_1\\) と \\(R_2\\) の抵抗を直列つなぎするとき、合成抵抗を表す式はどれか。",
+        choices: [
+          "\\(R_1+R_2\\)",
+          "\\(\\dfrac{1}{R_1}+\\dfrac{1}{R_2}\\)",
+          "\\(\\dfrac{R_1+R_2}{R_1R_2}\\)",
+          "\\(\\dfrac{R_1R_2}{R_1+R_2}\\)"
+        ]
+      },
+      {
+        id: 25,
+        text: "抵抗値 \\(R_1\\) と \\(R_2\\) の抵抗を並列つなぎするとき、合成抵抗を表す式はどれか。",
+        choices: [
+          "\\(\\dfrac{R_1R_2}{R_1+R_2}\\)",
+          "\\(\\dfrac{1}{R_1}+\\dfrac{1}{R_2}\\)",
+          "\\(\\dfrac{R_1+R_2}{R_1R_2}\\)",
+          "\\(R_1+R_2\\)"
+        ]
+      }
+    ]
+  },
+  {
+    id: 2,
+    label: "基本②",
+    subtitle: "ジュール熱・電力・電力量・分流器と倍率器",
+    available: true,
+    questions: [
+      {
+        id: 26,
+        text: "長さ \\(L\\) の導体中の一様電場 \\(E\\) から、電気量 \\(-e\\) をもつ電子1個が受ける力の大きさを表す式はどれか。",
+        choices: [
+          "\\(eE\\)",
+          "\\(eEL\\)",
+          "\\(\\dfrac{E}{e}\\)",
+          "\\(\\dfrac{e}{E}\\)"
+        ]
+      },
+      {
+        id: 27,
+        text: "平均の速さ \\(v\\) の電子は \\(t\\) 秒間で距離 \\(vt\\) 移動するので、このとき \\(eE\\) の力が1個の電子にする仕事 \\(W\\) を表す式はどれか。",
+        choices: [
+          "\\(W = eEvt\\)",
+          "\\(W = \\dfrac{eEv}{t}\\)",
+          "\\(W = \\dfrac{eE}{vt}\\)",
+          "\\(W = eEvt^2\\)"
+        ]
+      },
+      {
+        id: 28,
+        text: "単位体積あたりの電子の数が \\(n\\) であるとき、\\(t\\) 秒間に電場 \\(E\\) が長さ \\(L\\)、断面積 \\(S\\) 中の全電子にする仕事 \\(W'\\) を表す式はどれか。",
+        choices: [
+          "\\(W' = nevSELt\\)",
+          "\\(W' = nvSELt\\)",
+          "\\(W' = neSELt\\)",
+          "\\(W' = nevELt\\)"
+        ]
+      },
+      {
+        id: 29,
+        text: "\\(W' = nevSELt\\) を電流 \\(I\\)、電圧 \\(V\\) を用いて表すと、\\(W'\\) はどのように書けるか。",
+        choices: [
+          "\\(W' = VIt\\)",
+          "\\(W' = \\dfrac{V}{It}\\)",
+          "\\(W' = \\dfrac{I}{Vt}\\)",
+          "\\(W' = \\dfrac{VI}{t}\\)"
+        ]
+      },
+      {
+        id: 30,
+        text: "全電子がされる仕事は、抵抗で生じるジュール熱 \\(Q\\) と等しいと考えられる。ジュール熱 \\(Q\\) を電圧 \\(V\\)、電流 \\(I\\)、時間 \\(t\\) を用いて表す式はどれか。",
+        choices: [
+          "\\(Q = VIt\\)",
+          "\\(Q = \\dfrac{V}{It}\\)",
+          "\\(Q = \\dfrac{1}{2}VIt\\)",
+          "\\(Q = VIt^2\\)"
+        ]
+      },
+      {
+        id: 31,
+        text: "単位時間あたりの電力量を何というか。",
+        choices: [
+          "電力",
+          "仕事",
+          "電力量",
+          "エネルギー"
+        ]
+      },
+      {
+        id: 32,
+        text: "電力の記号として正しいものはどれか。",
+        choices: ["P", "W", "I", "R"]
+      },
+      {
+        id: 33,
+        text: "電力の主な単位として正しいものはどれか。",
+        choices: ["W", "J", "V", "A"]
+      },
+      {
+        id: 34,
+        text: "電磁気における電力と物理的に同じといえる、力学における物理量はどれか。",
+        choices: [
+          "仕事率",
+          "仕事",
+          "力学的エネルギー",
+          "力積"
+        ]
+      },
+      {
+        id: 35,
+        text: "ある抵抗に電圧 \\(V\\) をかけたところ、電流 \\(I\\) が流れた。このときの電力を表す式はどれか。",
+        choices: [
+          "\\(VI\\)",
+          "\\(VI^2\\)",
+          "\\(V^2I\\)",
+          "\\(\\dfrac{1}{2}VI\\)"
+        ]
+      },
+      {
+        id: 36,
+        text: "抵抗値 \\(R\\) の抵抗に電圧 \\(V\\) をかけた。このときの電力を表す式はどれか。",
+        choices: [
+          "\\(\\dfrac{V^2}{R}\\)",
+          "\\(RV^2\\)",
+          "\\(\\dfrac{V^2}{R^2}\\)",
+          "\\(\\dfrac{V^2}{2R}\\)"
+        ]
+      },
+      {
+        id: 37,
+        text: "抵抗値 \\(R\\) の抵抗に電圧をかけたところ、電流 \\(I\\) が流れた。このときの電力を表す式はどれか。",
+        choices: [
+          "\\(RI^2\\)",
+          "\\(\\dfrac{I^2}{R}\\)",
+          "\\(\\dfrac{I^2}{R^2}\\)",
+          "\\(\\dfrac{1}{2}RI^2\\)"
+        ]
+      },
+      {
+        id: 38,
+        text: "ジュールの法則を正しく説明しているものはどれか。",
+        choices: [
+          "抵抗に生じるジュール熱は、抵抗 \\(R\\) と電流 \\(I\\) の2乗の積に比例する（\\(RI^2\\)）。",
+          "抵抗に生じるジュール熱は、抵抗 \\(R\\) と電流 \\(I\\) の積に比例する（\\(RI\\)）。",
+          "抵抗に生じるジュール熱は、抵抗 \\(R\\) の2乗と電流 \\(I\\) の2乗の積に比例する（\\(R^2I^2\\)）。",
+          "抵抗に生じるジュール熱は、抵抗 \\(R\\) の2乗と電流 \\(I\\) の積に比例する（\\(R^2I\\)）。"
+        ]
+      },
+      {
+        id: 39,
+        text: "電力の単位 W を、J と s を用いて表すとどうなるか。",
+        choices: [
+          "\\(\\mathrm{J/s}\\)",
+          "\\(\\mathrm{J\\,s}\\)",
+          "\\(\\mathrm{s/J}\\)",
+          "\\(\\mathrm{J/s^2}\\)"
+        ]
+      },
+      {
+        id: 40,
+        text: "電力と電力量は同じ物理量か。",
+        choices: [
+          "違う",
+          "同じ"
+        ]
+      },
+      {
+        id: 41,
+        text: "1W の電力を1時間使ったときの電力量を表す単位は何か。",
+        choices: [
+          "\\(\\mathrm{Wh}\\)",
+          "\\(\\mathrm{Jh}\\)",
+          "\\(\\mathrm{W/h}\\)",
+          "\\(\\mathrm{J/h}\\)"
+        ]
+      },
+      {
+        id: 42,
+        text: "単位 Wh は何 J と等しいか。",
+        choices: [
+          "\\(1\\,\\mathrm{Wh} = 3600\\,\\mathrm{J}\\)",
+          "\\(1\\,\\mathrm{Wh} = 60\\,\\mathrm{J}\\)",
+          "\\(1\\,\\mathrm{Wh} = 420\\,\\mathrm{J}\\)",
+          "\\(1\\,\\mathrm{Wh} = \\dfrac{1}{3600}\\,\\mathrm{J}\\)"
+        ]
+      },
+      {
+        id: 43,
+        text: "電流計の計測できる最大値を超えて計測するために接続する機器を何というか。",
+        choices: [
+          "分流器",
+          "検流器",
+          "倍率器"
+        ]
+      },
+      {
+        id: 44,
+        text: "電圧計の計測できる最大値を超えて計測するために接続する機器を何というか。",
+        choices: [
+          "倍率器",
+          "検流器",
+          "分流器"
+        ]
+      },
+      {
+        id: 45,
+        text: "分流器は電流計にどのようにつなげるか。",
+        choices: [
+          "並列につなぐ",
+          "直列につなぐ"
+        ]
+      },
+      {
+        id: 46,
+        text: "倍率器は電圧計にどのようにつなげるか。",
+        choices: [
+          "直列につなぐ",
+          "並列につなぐ"
+        ]
+      }
+    ]
+  },
+  { id: 3, label: "基本③", subtitle: "", available: false, questions: [] },
+  { id: 4, label: "基本④", subtitle: "", available: false, questions: [] },
+  { id: 5, label: "基本⑤", subtitle: "", available: false, questions: [] }
+];
+
+// ============================================================
+// 各問題の解説文
+// ============================================================
+const EXPLANATIONS = {
+  1 : "電流の記号は \\(I\\)（Intensity of current の頭文字）。電圧は \\(V\\)、抵抗は \\(R\\)、電気量は \\(Q\\) で表す。",
+  2 : "電流の単位はアンペア [A]。1A は1秒間に1Cの電気量が断面を通過する電流の強さ。",
+  3 : "電流とは、ある断面を単位時間（1秒間）に通過する電気量のことである。電気量の移動量＝電流。",
+  4 : "電流の定義より \\(I=\\dfrac{Q}{\\Delta t}\\)。単位時間あたりに通過する電気量が電流の大きさ。",
+  5 : "電流 \\(I=envS\\)。断面積 \\(S\\)、電子密度 \\(n\\)、電子の速さ \\(v\\)、電子の電気量 \\(e\\) の積で表される。",
+  6 : "一様電場では電場の強さ＝電位差÷距離の関係が成り立つので \\(E=\\dfrac{V}{L}\\)。",
+  7 : "電場 \\(E\\) の中にある電気量 \\(q\\) の電荷にはたらく力は \\(F=qE\\)。電子の電気量の大きさは \\(e\\) なので、\\(F=e\\cdot\\dfrac{V}{L}=\\dfrac{eV}{L}\\)。",
+  8 : "電子にはたらく力のつり合い：\\(\\dfrac{eV}{L}=kv\\)。これを \\(v\\) について解くと \\(v=\\dfrac{eV}{kL}\\)。",
+  9 : "\\(I=envS\\) に \\(v=\\dfrac{eV}{kL}\\) を代入すると、\\(I=en\\cdot\\dfrac{eV}{kL}\\cdot S=\\dfrac{e^2nVS}{kL}\\)。",
+  10: "\\(I=\\dfrac{e^2nS}{kL}V\\) を \\(V\\) について解くと \\(V=\\dfrac{kL}{e^2nS}\\,I\\)。よって \\([\\text{ア}]=\\dfrac{kL}{e^2nS}\\)。",
+  11: "\\(V=\\dfrac{kL}{e^2nS}\\,I\\) は \\(V=(\\text{定数})\\times I\\) の形をしているので、電圧 \\(V\\) は電流 \\(I\\) に比例する。",
+  12: "\\(R=\\dfrac{kL}{e^2nS}\\) は、電圧と電流の比例関係を表す定数であり、これを電気抵抗（抵抗）という。",
+  13: "電気抵抗の記号は \\(R\\)（Resistance の頭文字）。電流 \\(I\\)、電圧 \\(V\\) と区別する。",
+  14: "電気抵抗の単位はオーム [\\(\\Omega\\)]。\\(V=RI\\) より \\([\\Omega]=[\\mathrm{V/A}]\\) である。",
+  15: "\\(R=\\dfrac{kL}{e^2nS}=\\dfrac{k}{e^2n}\\cdot\\dfrac{L}{S}\\) であり、\\(R=\\rho\\dfrac{L}{S}\\) と表せることから \\(\\rho=\\dfrac{k}{e^2n}\\)。",
+  16: "オームの法則：抵抗 \\(R\\) に電流 \\(I\\) が流れるとき、両端の電圧は \\(V=RI\\)。",
+  17: "\\(R=\\rho\\dfrac{L}{S}\\) より、抵抗は断面積 \\(S\\) に反比例する。\\(S\\) が2倍になると抵抗は \\(\\dfrac{1}{2}\\) 倍になる。",
+  18: "\\(R=\\rho\\dfrac{L}{S}\\) より \\(\\rho=R\\dfrac{S}{L}\\)。\\([\\Omega]\\times\\dfrac{[\\mathrm{m}^2]}{[\\mathrm{m}]}=[\\Omega\\cdot\\mathrm{m}]\\) となる。",
+  19: "金属の抵抗率は温度が上がるとほぼ一定の割合で増加する。これを \\(\\rho=\\rho_0(1+\\alpha t)\\) と表す。\\(\\alpha\\) は抵抗率の温度係数。",
+  20: "直列つなぎでは電流 \\(I\\) が共通。オームの法則より \\(V_1=R_1I\\)、\\(V_2=R_2I\\) なので \\(V_1:V_2=R_1:R_2\\)。",
+  21: "直列つなぎでは回路を流れる電流はどこでも同じなので、\\(I_1:I_2=1:1\\)。",
+  22: "並列つなぎでは各抵抗にかかる電圧 \\(V\\) が共通なので、\\(V_1:V_2=1:1\\)。",
+  23: "並列つなぎでは電圧 \\(V\\) が共通。オームの法則より \\(I_1=\\dfrac{V}{R_1}\\)、\\(I_2=\\dfrac{V}{R_2}\\) なので \\(I_1:I_2=\\dfrac{1}{R_1}:\\dfrac{1}{R_2}=R_2:R_1\\)。",
+  24: "直列つなぎでは電圧が加算される：\\(V=V_1+V_2=R_1I+R_2I=(R_1+R_2)I\\)。よって合成抵抗は \\(R_1+R_2\\)。",
+  25: "並列つなぎでは電流が加算される：\\(I=I_1+I_2=\\dfrac{V}{R_1}+\\dfrac{V}{R_2}=\\left(\\dfrac{1}{R_1}+\\dfrac{1}{R_2}\\right)V=\\dfrac{R_1+R_2}{R_1R_2}V\\)。よって合成抵抗は \\(\\dfrac{R_1R_2}{R_1+R_2}\\)。",
+
+  26: "電場 \\(E\\) の中にある電気量の大きさ \\(e\\) の電子にはたらく力は \\(F=eE\\)（力の大きさは電気量と電場の積）。",
+  27: "仕事＝力×距離。電子は \\(t\\) 秒間に \\(vt\\) だけ移動するので、力 \\(eE\\) がする仕事は \\(W=eE\\times vt=eEvt\\)。",
+  28: "長さ \\(L\\)、断面積 \\(S\\) の部分に含まれる電子の数は \\(nLS\\) 個。1個あたりの仕事が \\(eEvt\\) なので、全電子にする仕事は \\(W'=nLS\\times eEvt=nevSELt\\)。",
+  29: "一様電場では \\(E=\\dfrac{V}{L}\\) より \\(EL=V\\)。また電流は \\(I=envS\\)。よって \\(W'=envS\\times EL\\times t=(envS)\\times V\\times t=IVt=VIt\\)。",
+  30: "電場が電子にした仕事はすべて熱に変わると考えられる（エネルギー保存）。よって、抵抗で生じるジュール熱は \\(Q=W'=VIt\\)。",
+  31: "電力とは単位時間（1秒間）あたりに消費される電力量（エネルギー）のこと。\\(P=\\dfrac{Q}{t}\\) の関係にある。",
+  32: "電力の記号は \\(P\\)（Power の頭文字）。電圧 \\(V\\)、電流 \\(I\\)、抵抗 \\(R\\) と区別する。",
+  33: "電力の単位はワット [W]（Watt）。\\(1\\,\\mathrm{W}=1\\,\\mathrm{J/s}\\)、つまり1秒間に1Jのエネルギーを消費・発生する割合。",
+  34: "力学における「仕事率」は単位時間あたりの仕事（エネルギー）であり、電力も単位時間あたりの電力量（エネルギー）なので、両者は物理的に同じ量である。",
+  35: "\\(Q=VIt\\) を時間 \\(t\\) で割ると電力 \\(P=\\dfrac{Q}{t}=VI\\) が得られる。電力＝電圧×電流。",
+  36: "\\(P=VI\\) にオームの法則 \\(I=\\dfrac{V}{R}\\) を代入すると \\(P=V\\times\\dfrac{V}{R}=\\dfrac{V^2}{R}\\)。",
+  37: "\\(P=VI\\) にオームの法則 \\(V=RI\\) を代入すると \\(P=RI\\times I=RI^2\\)。",
+  38: "ジュールの法則：抵抗で単位時間に発生する熱（電力）は \\(P=RI^2\\) で表され、抵抗値と電流の2乗に比例する。",
+  39: "\\(1\\,\\mathrm{W}=1\\,\\mathrm{J/s}\\)。電力＝単位時間あたりのエネルギーなので、単位はエネルギー[J]を時間[s]で割った形になる。",
+  40: "電力は単位時間あたりのエネルギー（瞬間的な消費の割合）であり、電力量は電力×時間で表される総エネルギー量。両者は次元（単位）も異なる別の物理量である。",
+  41: "電力量＝電力×時間。電力の単位W、時間の単位hを組み合わせた単位がワット時 [Wh]。",
+  42: "\\(1\\,\\mathrm{Wh}=1\\,\\mathrm{W}\\times1\\,\\mathrm{h}=1\\,\\mathrm{W}\\times3600\\,\\mathrm{s}=3600\\,\\mathrm{J}\\)。",
+  43: "分流器：電流計と並列に接続することで、電流計に流れる電流を減らし、より大きな電流を測定できるようにする抵抗器。",
+  44: "倍率器：電圧計と直列に接続することで、電圧計にかかる電圧を減らし、より大きな電圧を測定できるようにする抵抗器。",
+  45: "分流器は電流計と並列に接続する。これにより測定したい電流の一部を分流器に流し、電流計には小さな電流のみを流す。",
+  46: "倍率器は電圧計と直列に接続する。これにより測定したい電圧の一部を倍率器にかけ、電圧計には小さな電圧のみをかける。"
+};
+
+// ============================================================
+// 状態管理
+// ============================================================
+let curSec   = 1;
+let curMode  = 'study';
+let orderMode = 'seq'; // 'seq'=学習順  'rand'=ランダム
+
+const ss = {         // 自習モード状態
+  secId    : null,
+  qs       : [],     // シャッフル済み問題リスト
+  idx      : 0,      // 現在の問題インデックス
+  answered : false,
+  correct  : 0,
+  wrong    : 0,
+  chosen   : []      // 現在の問題のシャッフル済み選択肢インデックス配列
+};
+
+// ============================================================
+// 送信モード状態
+// ============================================================
+const sm = {
+  secId   : null,
+  num     : '',   // 組番号
+  name    : '',
+  started : false,
+  idx     : 0,
+  answered: false,
+  answers : {},   // {qId: 選択した元インデックス}
+  chosen  : []    // 現在の問題のシャッフル済み選択肢インデックス
+};
+
+// ============================================================
+// ユーティリティ
+// ============================================================
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function doMath(el) {
+  if (window.renderMathInElement) {
+    renderMathInElement(el, {
+      delimiters: [
+        { left: '\\(', right: '\\)', display: false },
+        { left: '\\[', right: '\\]', display: true  }
+      ],
+      throwOnError: false
+    });
+  }
+}
+
+// ============================================================
+// タブ・モード
+// ============================================================
+function buildTabs() {
+  document.getElementById('tabs').innerHTML = SECTIONS.map(s => `
+    <div class="tab ${s.id === curSec ? 'active' : ''} ${!s.available ? 'disabled' : ''}"
+         onclick="${s.available ? `setSec(${s.id})` : ''}">
+      ${s.label}
+    </div>
+  `).join('');
+}
+
+function setSec(id) {
+  curSec = id;
+  ss.secId    = null; // セクション変更→自習状態リセット
+  sm.started  = false; // 送信モードも最初に戻す
+  buildTabs();
+  render();
+}
+
+function setMode(mode) {
+  curMode = mode;
+  document.getElementById('modeStudy' ).classList.toggle('active', mode === 'study' );
+  document.getElementById('modeSubmit').classList.toggle('active', mode === 'submit');
+  render();
+}
+
+// ============================================================
+// メインレンダー
+// ============================================================
+function render() {
+  const sec = SECTIONS.find(s => s.id === curSec);
+  document.getElementById('hdrSub').textContent = sec.subtitle || '';
+
+  if (!sec.available) {
+    document.getElementById('content').innerHTML = `
+      <div class="coming-card">
+        <div class="coming-icon">🔧</div>
+        <div class="coming-title">準備中</div>
+        <div class="coming-text">${sec.label} は現在準備中です。</div>
+      </div>`;
+    return;
+  }
+
+  if (curMode === 'study') renderStudy(sec);
+  else                      renderSubmit(sec);
+}
+
+// ============================================================
+// 自習モード
+// ============================================================
+function setOrderMode(mode) {
+  orderMode   = mode;
+  ss.secId    = null; // 切替時に出題をリセット
+  ss.chosen   = [];
+  render();
+}
+
+function startStudy(sec) {
+  ss.secId    = sec.id;
+  ss.qs       = orderMode === 'rand'
+                  ? shuffle(sec.questions)
+                  : [...sec.questions]; // 学習順：Q1から順番
+  ss.idx      = 0;
+  ss.answered = false;
+  ss.correct  = 0;
+  ss.wrong    = 0;
+  ss.chosen   = [];
+  renderStudy(sec);
+}
+
+function renderStudy(sec) {
+  if (ss.secId !== sec.id || ss.qs.length === 0) {
+    startStudy(sec);
+    return;
+  }
+  if (ss.idx >= ss.qs.length) {
+    renderResult(sec);
+    return;
+  }
+
+  const q     = ss.qs[ss.idx];
+  const total = ss.qs.length;
+  const pct   = Math.round((ss.idx / total) * 100);
+
+  // 未回答時のみ選択肢をシャッフル
+  if (ss.chosen.length === 0) {
+    ss.chosen = shuffle(q.choices.map((_, i) => i));
+  }
+
+  const el = document.getElementById('content');
+  el.innerHTML = `
+    <div class="order-row">
+      <span class="order-label">出題順：</span>
+      <button class="order-btn ${orderMode === 'seq'  ? 'active' : ''}"
+              onclick="setOrderMode('seq')">学習順</button>
+      <button class="order-btn ${orderMode === 'rand' ? 'active' : ''}"
+              onclick="setOrderMode('rand')">ランダム</button>
+    </div>
+    <div class="prog-row">
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <div class="prog-text">${ss.idx + 1} / ${total}</div>
+    </div>
+    <div class="score-row" id="scoreRow">✅ ${ss.correct} &nbsp;❌ ${ss.wrong}</div>
+
+    <div class="q-card">
+      <div class="q-num">問 ${q.id}</div>
+      ${q.image ? `<img class="q-img" src="${q.image}" alt="図${q.id}">` : ''}
+      <div class="q-text">${q.text}</div>
+    </div>
+
+    <div class="choices" id="clist">
+      ${ss.chosen.map((ci, pos) => `
+        <button class="choice-btn" id="cb${pos}" onclick="pick(${pos})"
+                ${ss.answered ? 'disabled' : ''}>
+          ${q.choices[ci]}
+        </button>`).join('')}
+    </div>
+
+    <div class="feedback" id="fb"></div>
+
+    <button class="next-btn" id="nb" onclick="nextQ()" style="display:none;">
+      ${ss.idx + 1 < total ? '次の問題 →' : '結果を見る →'}
+    </button>
+  `;
+
+  doMath(el);
+}
+
+function pick(pos) {
+  if (ss.answered) return;
+  ss.answered = true;
+
+  const q         = ss.qs[ss.idx];
+  const isCorrect = ss.chosen[pos] === 0; // choices[0] が正解
+
+  if (isCorrect) ss.correct++;
+  else           ss.wrong++;
+
+  // ボタンのスタイル更新
+  ss.chosen.forEach((ci, p) => {
+    const btn = document.getElementById(`cb${p}`);
+    if (!btn) return;
+    btn.disabled = true;
+    if (ci === 0)      btn.classList.add('correct');
+    else if (p === pos) btn.classList.add('wrong');
+  });
+
+  // フィードバック
+  const fb   = document.getElementById('fb');
+  const expl = EXPLANATIONS[q.id] || '';
+  if (isCorrect) {
+    fb.className = 'feedback ok';
+    fb.innerHTML = `✅ 正解です！${expl ? `<br><span class="fb-expl">💡 ${expl}</span>` : ''}`;
+  } else {
+    fb.className = 'feedback ng';
+    fb.innerHTML = `❌ 不正解。正解は「${q.choices[0]}」です。${expl ? `<br><span class="fb-expl">💡 ${expl}</span>` : ''}`;
+  }
+  doMath(fb);
+
+  // スコア更新
+  document.getElementById('scoreRow').innerHTML = `✅ ${ss.correct} &nbsp;❌ ${ss.wrong}`;
+
+  // 次へボタン表示
+  document.getElementById('nb').style.display = 'block';
+}
+
+function nextQ() {
+  ss.idx++;
+  ss.answered = false;
+  ss.chosen   = [];
+  renderStudy(SECTIONS.find(s => s.id === curSec));
+}
+
+function renderResult(sec) {
+  const total = ss.qs.length;
+  const c     = ss.correct;
+  const pct   = Math.round((c / total) * 100);
+  const emoji = pct >= 90 ? '🎉' : pct >= 70 ? '👍' : pct >= 50 ? '🤔' : '😢';
+
+  document.getElementById('content').innerHTML = `
+    <div class="result-card">
+      <div class="result-emoji">${emoji}</div>
+      <div class="result-score">${c}</div>
+      <div class="result-total">/ ${total} 問正解</div>
+      <div class="result-pct">正答率 ${pct}%</div>
+      <button class="retry-btn"
+              onclick="startStudy(SECTIONS.find(s=>s.id===${curSec}))">
+        🔄 もう一度やり直す
+      </button>
+    </div>`;
+}
+
+// ============================================================
+// 送信モード
+// ============================================================
+function renderSubmit(sec) {
+  if (sm.secId !== sec.id || !sm.started) {
+    renderSubmitIntro(sec);
+    return;
+  }
+  if (sm.idx >= sec.questions.length) {
+    renderSubmitFinal(sec);
+    return;
+  }
+  renderSubmitQuestion(sec);
+}
+
+/* ── 氏名入力画面 ── */
+function renderSubmitIntro(sec) {
+  document.getElementById('content').innerHTML = `
+    <div class="name-card">
+      <label class="name-label" for="snum">組番号を入力してください</label>
+      <input type="number" class="name-input" id="snum"
+             placeholder="例：801～940"
+             min="801" max="940"
+             value="${sm.secId === sec.id ? sm.num : ''}">
+    </div>
+    <div class="name-card">
+      <label class="name-label" for="sname">氏名を入力してください</label>
+      <input type="text" class="name-input" id="sname"
+             placeholder="例：湘南 太郎"
+             value="${sm.secId === sec.id ? sm.name : ''}">
+    </div>
+    <button class="sm-start-btn" onclick="startSubmitQuiz(${sec.id})">
+      ✏️ 回答を開始する（全 ${sec.questions.length} 問）
+    </button>`;
+}
+
+function startSubmitQuiz(secId) {
+  const num  = document.getElementById('snum').value.trim();
+  const name = document.getElementById('sname').value.trim();
+  if (!num)  { alert('組番号を入力してください。'); return; }
+  if (!name) { alert('氏名を入力してください。');   return; }
+  sm.secId    = secId;
+  sm.num      = num;
+  sm.name     = name;
+  sm.started  = true;
+  sm.idx      = 0;
+  sm.answered = false;
+  sm.answers  = {};
+  sm.chosen   = [];
+  renderSubmit(SECTIONS.find(s => s.id === secId));
+}
+
+/* ── 一問表示 ── */
+function renderSubmitQuestion(sec) {
+  const q     = sec.questions[sm.idx];
+  const total = sec.questions.length;
+  const pct   = Math.round((sm.idx / total) * 100);
+
+  if (sm.chosen.length === 0) {
+    sm.chosen = shuffle(q.choices.map((_, i) => i));
+  }
+
+  const expl       = EXPLANATIONS[q.id] || '';
+  const selectedCi = sm.answers[q.id]; // undefined なら未回答
+
+  const el = document.getElementById('content');
+  el.innerHTML = `
+    <div class="prog-row">
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <div class="prog-text">${sm.idx + 1} / ${total}</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-num">問 ${q.id}</div>
+      ${q.image ? `<img class="q-img" src="${q.image}" alt="図${q.id}">` : ''}
+      <div class="q-text">${q.text}</div>
+    </div>
+
+    <div class="choices">
+      ${sm.chosen.map((ci, pos) => {
+        let cls = '';
+        if (sm.answered) {
+          if (ci === 0)                           cls = 'correct';
+          else if (ci === selectedCi && ci !== 0) cls = 'wrong';
+        }
+        return `
+          <button class="choice-btn ${cls}" id="smcb${pos}"
+                  onclick="pickSubmit(${pos})"
+                  ${sm.answered ? 'disabled' : ''}>
+            ${q.choices[ci]}
+          </button>`;
+      }).join('')}
+    </div>
+
+    ${sm.answered ? `
+      <div class="sm-explanation">
+        <span class="sm-expl-icon">💡</span>
+        <span>${expl}</span>
+      </div>
+      <button class="next-btn" onclick="nextSubmitQ()">
+        ${sm.idx + 1 < total ? '次の問題 →' : '✅ 送信画面へ →'}
+      </button>
+    ` : ''}
+  `;
+
+  doMath(el);
+}
+
+function pickSubmit(pos) {
+  if (sm.answered) return;
+  sm.answered = true;
+  const sec = SECTIONS.find(s => s.id === sm.secId);
+  const q   = sec.questions[sm.idx];
+  sm.answers[q.id] = sm.chosen[pos]; // 元インデックスを保存
+  renderSubmitQuestion(sec);
+}
+
+function nextSubmitQ() {
+  sm.idx++;
+  sm.answered = false;
+  sm.chosen   = [];
+  renderSubmit(SECTIONS.find(s => s.id === sm.secId));
+}
+
+/* ── 送信確認画面 ── */
+function renderSubmitFinal(sec) {
+  document.getElementById('content').innerHTML = `
+    <div class="sm-final-card">
+      <div class="sm-final-icon">📝</div>
+      <div class="sm-final-title">全 ${sec.questions.length} 問の回答が完了しました</div>
+      <div class="sm-final-name">${sm.name} さん</div>
+      <button class="submit-btn" id="sbtn" onclick="doSubmit(${sec.id})">
+        📤 回答を送信する
+      </button>
+      <div id="sresult"></div>
+    </div>`;
+}
+
+// ★ デプロイ後にGAS URLをここに設定 ★
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyCP6bSJ7BzOEG0vWzTmpEYUM9hmU4mL7JPSXNl6oemUU4rSvNFzFWHS4TxtWGOKQUT/exec';
+
+let _gasParams = null; // 再送信用パラメータ
+let _gasMeta   = null; // 再送信用メタ情報
+
+function doSubmit(secId) {
+  const sec = SECTIONS.find(s => s.id === secId);
+  let correct = 0;
+  sec.questions.forEach(q => { if (sm.answers[q.id] === 0) correct++; });
+
+  _gasMeta = {
+    num: sm.num, name: sm.name,
+    correct, total: sec.questions.length
+  };
+  _gasParams = new URLSearchParams({
+    num      : sm.num,
+    name     : sm.name,
+    section  : sec.label,
+    correct  : String(correct),
+    total    : String(sec.questions.length),
+    timestamp: new Date().toLocaleString('ja-JP')
+  });
+
+  // 各問の正誤を個別パラメータとして追加（○/×）
+  sec.questions.forEach(q => {
+    _gasParams.append('q' + q.id, sm.answers[q.id] === 0 ? '○' : '×');
+  });
+
+  const btn = document.getElementById('sbtn');
+  btn.disabled    = true;
+  btn.textContent = '📤 送信中…';
+
+  trySend(btn, 1);
+}
+
+async function trySend(btn, attempt) {
+  const MAX_RETRY = 3;
+  try {
+    if (btn) {
+      btn.textContent = attempt === 1
+        ? '📤 送信中…'
+        : `🔄 再送信中… (${attempt}/${MAX_RETRY})`;
+    }
+
+    // GETリクエスト（no-cors：CORSエラーを回避）
+    await fetch(`${GAS_URL}?${_gasParams}`, { method: 'GET', mode: 'no-cors' });
+
+    // 例外なく完了 → GASに到達したと判断
+    const { num, name, correct, total } = _gasMeta;
+    document.getElementById('sresult').innerHTML = `
+      <div class="sub-result ok">
+        ✅ 送信完了しました。お疲れ様でした！<br>
+        <strong>${num}　${name}</strong> さんの得点：<strong>${correct} / ${total}</strong>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
+        <button class="next-btn" onclick="setMode('study')">
+          📖 自習モードで学習する
+        </button>
+        <button class="next-btn"
+                style="background:#059669;"
+                onclick="sm.started=false; setMode('submit')">
+          📤 送信モードでもう一度
+        </button>
+      </div>`;
+
+  } catch (e) {
+    if (attempt < MAX_RETRY) {
+      await new Promise(r => setTimeout(r, 2000)); // 2秒待ってリトライ
+      await trySend(btn, attempt + 1);
+    } else {
+      // 全リトライ失敗
+      const { num, name, correct, total } = _gasMeta;
+      document.getElementById('sresult').innerHTML = `
+        <div class="sub-result warn">
+          ❌ 送信に失敗しました。ネットワークを確認してもう一度お試しください。<br>
+          <strong>${num}　${name}</strong> さんの得点：<strong>${correct} / ${total}</strong>
+        </div>`;
+      if (btn) { btn.disabled = false; btn.textContent = '📤 もう一度送信する'; }
+    }
+  }
+}
+
+// ============================================================
+// 初期化
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  buildTabs();
+  document.getElementById('modeStudy').classList.add('active');
+  render();
+});
+</script>
+</body>
+</html>
