@@ -204,7 +204,23 @@
     /* KaTeX調整 */
     .katex{font-size:1em;}
     .katex-display{margin:.3em 0;}
-  </style>
+  
+/* ===== キルヒホッフ演習（スコープ化） ===== */
+#kirchhoff-root{
+    --paper:#F5F3EC;--card:#FFFFFF;--ink:#16243B;--ink-soft:#52617A;
+    --line:#D6D0C2;--accent:#E07A1F;--accent-soft:#FBE8D4;
+    --ok:#2E7D5B;--ok-soft:#E4F1EA;--no:#C0392B;--no-soft:#FBE7E3;
+    --mono:"SFMono-Regular",ui-monospace,"Roboto Mono","Consolas",monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
+  }#kirchhoff-root *{box-sizing:border-box}#kirchhoff-root, #kirchhoff-root{margin:0}#kirchhoff-root{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-text-size-adjust:100%;padding:20px 14px}#kirchhoff-root .wrap{max-width:720px;margin:0 auto}#kirchhoff-root header.hero{margin:0 0 26px}#kirchhoff-root .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}#kirchhoff-root h1{font-size:1.5rem;line-height:1.3;margin:0 0 6px;font-weight:700;letter-spacing:.01em}#kirchhoff-root .sub{color:var(--ink-soft);font-size:.95rem;margin:0}#kirchhoff-root .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 22px 24px;margin:0 0 20px}#kirchhoff-root .card>h2{font-size:1.02rem;margin:0 0 14px;font-weight:700;display:flex;align-items:baseline;gap:10px}#kirchhoff-root .card>h2 .no{font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;color:#fff;background:var(--ink);border-radius:6px;padding:3px 8px;white-space:nowrap}#kirchhoff-root .schematic{width:100%;height:auto;display:block;margin:0 auto 10px;max-width:480px}#kirchhoff-root .wire{stroke:var(--ink);stroke-width:2.4;fill:none;stroke-linecap:round}#kirchhoff-root .comp{stroke:var(--ink);stroke-width:2.4;fill:var(--card)}#kirchhoff-root .batt{stroke:var(--ink);stroke-linecap:round}#kirchhoff-root .node{fill:var(--ink)}#kirchhoff-root .lab{fill:var(--ink);font-family:var(--mono);font-size:14px}#kirchhoff-root .lab-val{fill:var(--ink-soft);font-family:var(--mono);font-size:12.5px}#kirchhoff-root .cur{fill:var(--accent);font-family:var(--mono);font-size:15px;font-weight:600}#kirchhoff-root .arrow{stroke:var(--accent);stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round}#kirchhoff-root .arrowhead{fill:var(--accent)}#kirchhoff-root .nodelab{fill:var(--ink);font-family:var(--sans);font-size:14px;font-weight:700}#kirchhoff-root .dot{fill:var(--accent)}
+  @keyframes flowUp{from{transform:translateY(0)}to{transform:translateY(-232px)}}
+  @keyframes flowDn{from{transform:translateY(0)}to{transform:translateY(232px)}}
+  @keyframes flowRt{from{transform:translateX(0)}to{transform:translateX(166px)}}
+  @keyframes flowLt{from{transform:translateX(0)}to{transform:translateX(-166px)}}#kirchhoff-root .up{animation:flowUp 2.4s linear infinite}#kirchhoff-root .dn{animation:flowDn 2.4s linear infinite}#kirchhoff-root .rt{animation:flowRt 2.4s linear infinite}#kirchhoff-root .lt{animation:flowLt 2.4s linear infinite}
+  @keyframes aPulse{0%{opacity:.45;transform:scale(.6)}70%{opacity:0;transform:scale(2.4)}100%{opacity:0;transform:scale(2.4)}}#kirchhoff-root .aPulse{fill:var(--accent);transform-box:fill-box;transform-origin:center;animation:aPulse 2.4s ease-out infinite}#kirchhoff-root .d2{animation-delay:.8s}#kirchhoff-root .d3{animation-delay:1.6s}
+  @media (prefers-reduced-motion:reduce){#kirchhoff-root .dot{animation:none;opacity:0}#kirchhoff-root .aPulse{animation:none;opacity:0}}#kirchhoff-root .note{font-size:.8rem;color:var(--ink-soft);text-align:center;margin:0 0 14px;line-height:1.6}#kirchhoff-root .given{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;border-top:1px dashed var(--line);padding-top:16px;margin-top:4px}#kirchhoff-root .chip{font-family:var(--mono);font-size:.86rem;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:5px 11px;color:var(--ink)}#kirchhoff-root .chip b{color:var(--accent);font-weight:600}#kirchhoff-root .reroll{display:block;margin:16px auto 0;appearance:none;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);font-family:var(--sans);font-weight:700;font-size:.86rem;border-radius:9px;padding:8px 16px;cursor:pointer;transition:background .12s ease,color .12s ease}#kirchhoff-root .reroll:hover{background:var(--ink);color:#fff}#kirchhoff-root .prompt{margin:0 0 16px;color:var(--ink)}#kirchhoff-root .prompt .eq{font-family:var(--mono);background:var(--paper);padding:1px 6px;border-radius:5px}#kirchhoff-root .choices{display:flex;flex-direction:column;gap:10px;margin:0 0 16px}#kirchhoff-root .choice{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;background:var(--card);transition:border-color .12s ease,background .12s ease}#kirchhoff-root .choice:hover{border-color:var(--accent)}#kirchhoff-root .choice input{position:absolute;opacity:0;width:0;height:0}#kirchhoff-root .tick{flex:0 0 auto;width:20px;height:20px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;transition:border-color .12s ease}#kirchhoff-root .choice:hover .tick{border-color:var(--accent)}#kirchhoff-root .choice.sel{border-color:var(--accent);background:var(--accent-soft)}#kirchhoff-root .choice.sel .tick{border-color:var(--accent)}#kirchhoff-root .choice.sel .tick::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent)}#kirchhoff-root .choice .txt{font-family:var(--mono);font-size:1rem;color:var(--ink);letter-spacing:.01em}#kirchhoff-root .choices.locked .choice{cursor:default;pointer-events:none}#kirchhoff-root .choice.correct{border-color:var(--ok);background:var(--ok-soft)}#kirchhoff-root .choice.correct .tick{border-color:var(--ok)}#kirchhoff-root .choice.correct .tick::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--ok)}#kirchhoff-root .choice.wrong{border-color:var(--no);background:var(--no-soft)}#kirchhoff-root .choice.wrong .tick{border-color:var(--no)}#kirchhoff-root .choice.wrong .tick::after{content:"\00d7";color:var(--no);font-size:15px;font-weight:700;line-height:1}#kirchhoff-root .tag{margin-left:auto;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;padding:2px 7px;border-radius:5px;white-space:nowrap}#kirchhoff-root .tag.ok{color:var(--ok);background:#fff;border:1px solid var(--ok)}#kirchhoff-root .tag.ng{color:var(--no);background:#fff;border:1px solid var(--no)}#kirchhoff-root .btn{appearance:none;border:none;cursor:pointer;font-family:var(--sans);font-size:.95rem;font-weight:700;color:#fff;background:var(--ink);border-radius:10px;padding:11px 20px;transition:opacity .12s ease}#kirchhoff-root .btn:hover{opacity:.88}#kirchhoff-root .btn:disabled{background:var(--line);color:#fff;cursor:default;opacity:1}#kirchhoff-root .btn:focus-visible, #kirchhoff-root .choice:focus-within, #kirchhoff-root .reroll:focus-visible{outline:3px solid var(--accent);outline-offset:2px}#kirchhoff-root .feedback{display:none;margin-top:16px;border-radius:10px;padding:14px 16px;font-size:.93rem}#kirchhoff-root .feedback.show{display:block}#kirchhoff-root .feedback.right{background:var(--ok-soft);border:1px solid var(--ok)}#kirchhoff-root .feedback.right .head{color:var(--ok)}#kirchhoff-root .feedback.miss{background:var(--no-soft);border:1px solid var(--no)}#kirchhoff-root .feedback.miss .head{color:var(--no)}#kirchhoff-root .feedback .head{font-weight:700;margin:0 0 8px;display:flex;align-items:center;gap:7px}#kirchhoff-root .feedback p{margin:0 0 6px}#kirchhoff-root .feedback .rev{color:var(--accent);font-weight:700}#kirchhoff-root .feedback .work{font-family:var(--mono);font-size:.86rem;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:11px 13px;margin-top:8px;line-height:1.85;white-space:pre-wrap;color:var(--ink)}#kirchhoff-root .score{text-align:center;background:var(--ink);color:#fff;border-color:var(--ink)}#kirchhoff-root .score h2{justify-content:center;color:#fff}#kirchhoff-root .score .big{font-family:var(--mono);font-size:2.4rem;font-weight:700;margin:6px 0 2px}#kirchhoff-root .score .big .accent{color:var(--accent)}#kirchhoff-root .score p{margin:2px 0 0;color:#cdd4df;font-size:.9rem}#kirchhoff-root .score .btn{background:var(--accent);margin-top:16px}#kirchhoff-root .foot{text-align:center;color:var(--ink-soft);font-size:.78rem;margin-top:8px}
+
+</style>
 </head>
 <body>
 
@@ -219,17 +235,12 @@
 <div class="main">
   <div class="mode-row">
     <button class="mode-btn" id="modeStudy" onclick="setMode('study')">📖 自習モード</button>
-    <button class="mode-btn" id="modeSubmit" onclick="setMode('submit')">📤 送信モード</button>
+    <button class="mode-btn" id="modeSubmit" onclick="setMode('submit')">📋 学習記録モード</button>
   </div>
   <div id="content"></div>
 </div>
 
 <script>
-// ============================================================
-// データ定義
-// choices[0] が常に正解。表示時にシャッフルする。
-// ============================================================
-
 const SECTIONS = [
   {
     id: 1,
@@ -665,14 +676,11 @@ const SECTIONS = [
       }
     ]
   },
-  { id: 3, label: "基本③", subtitle: "", available: false, questions: [] },
+  { id: 3, label: "基本③", subtitle: "キルヒホッフの法則", available: true, kirchhoff: true, questions: [] },
   { id: 4, label: "基本④", subtitle: "", available: false, questions: [] },
   { id: 5, label: "基本⑤", subtitle: "", available: false, questions: [] }
 ];
 
-// ============================================================
-// 各問題の解説文
-// ============================================================
 const EXPLANATIONS = {
   1 : "電流の記号は \\(I\\)（Intensity of current の頭文字）。電圧は \\(V\\)、抵抗は \\(R\\)、電気量は \\(Q\\) で表す。",
   2 : "電流の単位はアンペア [A]。1A は1秒間に1Cの電気量が断面を通過する電流の強さ。",
@@ -728,50 +736,29 @@ const EXPLANATIONS = {
 // ============================================================
 let curSec   = 1;
 let curMode  = 'study';
-let orderMode = 'seq'; // 'seq'=学習順  'rand'=ランダム
+let orderMode = 'seq';
 
-const ss = {         // 自習モード状態
-  secId    : null,
-  qs       : [],     // シャッフル済み問題リスト
-  idx      : 0,      // 現在の問題インデックス
-  answered : false,
-  correct  : 0,
-  wrong    : 0,
-  chosen   : []      // 現在の問題のシャッフル済み選択肢インデックス配列
-};
-
-// ============================================================
-// 送信モード状態
-// ============================================================
-const sm = {
-  secId   : null,
-  num     : '',   // 組番号
-  name    : '',
-  started : false,
-  idx     : 0,
-  answered: false,
-  answers : {},   // {qId: 選択した元インデックス}
-  chosen  : []    // 現在の問題のシャッフル済み選択肢インデックス
-};
+const ss = { secId:null, qs:[], idx:0, answered:false, correct:0, wrong:0, chosen:[] };
+const sm = { secId:null, num:'', name:'', started:false, idx:0, answered:false, answers:{}, chosen:[] };
+const km = { num:'', name:'', started:false };
 
 // ============================================================
 // ユーティリティ
 // ============================================================
 function shuffle(arr) {
   const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+  for (let i = a.length-1; i>0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
   }
   return a;
 }
-
 function doMath(el) {
   if (window.renderMathInElement) {
     renderMathInElement(el, {
       delimiters: [
-        { left: '\\(', right: '\\)', display: false },
-        { left: '\\[', right: '\\]', display: true  }
+        {left:'\\(',right:'\\)',display:false},
+        {left:'\\[',right:'\\]',display:true}
       ],
       throwOnError: false
     });
@@ -783,26 +770,135 @@ function doMath(el) {
 // ============================================================
 function buildTabs() {
   document.getElementById('tabs').innerHTML = SECTIONS.map(s => `
-    <div class="tab ${s.id === curSec ? 'active' : ''} ${!s.available ? 'disabled' : ''}"
-         onclick="${s.available ? `setSec(${s.id})` : ''}">
+    <div class="tab ${s.id===curSec?'active':''} ${!s.available?'disabled':''}"
+         onclick="${s.available?`setSec(${s.id})`:''}">
       ${s.label}
     </div>
   `).join('');
 }
-
 function setSec(id) {
   curSec = id;
-  ss.secId    = null; // セクション変更→自習状態リセット
-  sm.started  = false; // 送信モードも最初に戻す
+  ss.secId = null;
+  sm.started = false;
+  km.started = false;
   buildTabs();
   render();
 }
-
 function setMode(mode) {
   curMode = mode;
-  document.getElementById('modeStudy' ).classList.toggle('active', mode === 'study' );
-  document.getElementById('modeSubmit').classList.toggle('active', mode === 'submit');
+  document.getElementById('modeStudy' ).classList.toggle('active', mode==='study' );
+  document.getElementById('modeSubmit').classList.toggle('active', mode==='submit');
   render();
+}
+
+
+// ============================================================
+// 基本③ キルヒホッフ（自習 / 学習記録）
+// ============================================================
+function mountKirchhoff(onFinish) {
+  document.getElementById('content').insertAdjacentHTML('beforeend',
+    '<div id="kirchhoff-root">' + (window._kirchhoffBodyHtml || '') + '</div>');
+  window._kirchhoffOnFinish = onFinish || null;
+  if (window._kirchhoffInit) {
+    try { window._kirchhoffInit(); }
+    catch(e){ console.error('kirchhoff init error:', e); }
+  }
+}
+
+function renderKirchhoffStudy(sec) {
+  document.getElementById('content').innerHTML =
+    '<p style="font-size:12px;color:#64748b;text-align:center;margin-bottom:10px;">' +
+    '自習モードです。数値はランダムに出題されます。</p>';
+  mountKirchhoff(null);
+}
+
+function renderKirchhoffSubmit(sec) {
+  if (!km.started) {
+    document.getElementById('content').innerHTML = `
+      <div class="name-card">
+        <label class="name-label" for="ksnum">組番号を入力してください</label>
+        <input type="text" class="name-input" id="ksnum"
+               placeholder="例：C01～E40" value="${km.num}">
+      </div>
+      <div class="name-card">
+        <label class="name-label" for="ksname">氏名を入力してください</label>
+        <input type="text" class="name-input" id="ksname"
+               placeholder="例：湘南 太郎" value="${km.name}">
+      </div>
+      <button class="sm-start-btn" onclick="startKirchhoffSubmit()">
+        ✏️ 演習を開始する（全 5 問）
+      </button>`;
+    return;
+  }
+  // 演習表示（完了時に送信）
+  document.getElementById('content').innerHTML =
+    '<p style="font-size:12px;color:#64748b;text-align:center;margin-bottom:10px;">' +
+    '<strong>' + km.num + '　' + km.name + '</strong> さん／全5問に解答すると自動で送信されます。</p>' +
+    '<div id="ksresult"></div>';
+  mountKirchhoff(function(score, results){
+    submitKirchhoff(score, results);
+  });
+}
+
+function startKirchhoffSubmit() {
+  const num  = document.getElementById('ksnum').value.trim();
+  const name = document.getElementById('ksname').value.trim();
+  if (!num)  { alert('組番号を入力してください。'); return; }
+  if (!name) { alert('氏名を入力してください。');   return; }
+  km.num = num; km.name = name; km.started = true;
+  renderKirchhoffSubmit(SECTIONS.find(s => s.kirchhoff));
+}
+
+function submitKirchhoff(score, results) {
+  const sec = SECTIONS.find(s => s.kirchhoff);
+  const params = new URLSearchParams({
+    num: km.num, name: km.name, section: sec.label,
+    correct: String(score), total: '5',
+    timestamp: new Date().toLocaleString('ja-JP')
+  });
+  // 5問の正誤（○/×）。問題番号は47〜51を割り当て
+  results.forEach((r, i) => { params.append('q' + (47 + i), r ? '○' : '×'); });
+
+  const box = document.getElementById('ksresult');
+  if (box) box.innerHTML =
+    '<div class="sub-result warn">📤 送信中…</div>';
+
+  trySendKirchhoff(params, score, 1);
+}
+
+async function trySendKirchhoff(params, score, attempt) {
+  const MAX_RETRY = 3;
+  const box = document.getElementById('ksresult');
+  try {
+    if (box) box.innerHTML =
+      '<div class="sub-result warn">' +
+      (attempt === 1 ? '📤 送信中…' : '🔄 再送信中… (' + attempt + '/' + MAX_RETRY + ')') +
+      '</div>';
+    await fetch(`${GAS_URL}?${params}`, { method: 'GET', mode: 'no-cors' });
+    if (box) box.innerHTML = `
+      <div class="sub-result ok">
+        ✅ 送信完了しました。お疲れ様でした！<br>
+        <strong>${km.num}　${km.name}</strong> さんの得点：<strong>${score} / 5</strong>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
+        <button class="next-btn" onclick="km.started=false; setMode('study')">📖 自習モードで学習する</button>
+        <button class="next-btn" style="background:#059669;"
+                onclick="km.started=false; setMode('submit')">📋 学習記録モードでもう一度</button>
+      </div>`;
+  } catch(e) {
+    if (attempt < MAX_RETRY) {
+      await new Promise(r => setTimeout(r, 2000));
+      await trySendKirchhoff(params, score, attempt + 1);
+    } else {
+      if (box) box.innerHTML = `
+        <div class="sub-result warn">
+          ❌ 送信に失敗しました。ネットワークを確認してもう一度お試しください。<br>
+          <strong>${km.num}　${km.name}</strong> さんの得点：<strong>${score} / 5</strong>
+        </div>
+        <button class="next-btn" style="margin-top:10px;"
+                onclick="km.started=false; setMode('submit')">📋 もう一度</button>`;
+    }
+  }
 }
 
 // ============================================================
@@ -822,6 +918,12 @@ function render() {
     return;
   }
 
+  if (sec.kirchhoff) {
+    if (curMode === 'submit') renderKirchhoffSubmit(sec);
+    else                       renderKirchhoffStudy(sec);
+    return;
+  }
+
   if (curMode === 'study') renderStudy(sec);
   else                      renderSubmit(sec);
 }
@@ -830,272 +932,190 @@ function render() {
 // 自習モード
 // ============================================================
 function setOrderMode(mode) {
-  orderMode   = mode;
-  ss.secId    = null; // 切替時に出題をリセット
-  ss.chosen   = [];
+  orderMode = mode;
+  ss.secId = null;
+  ss.chosen = [];
   render();
 }
-
 function startStudy(sec) {
-  ss.secId    = sec.id;
-  ss.qs       = orderMode === 'rand'
-                  ? shuffle(sec.questions)
-                  : [...sec.questions]; // 学習順：Q1から順番
-  ss.idx      = 0;
-  ss.answered = false;
-  ss.correct  = 0;
-  ss.wrong    = 0;
-  ss.chosen   = [];
+  ss.secId = sec.id;
+  ss.qs = orderMode==='rand' ? shuffle(sec.questions) : [...sec.questions];
+  ss.idx = 0; ss.answered = false; ss.correct = 0; ss.wrong = 0; ss.chosen = [];
   renderStudy(sec);
 }
-
 function renderStudy(sec) {
-  if (ss.secId !== sec.id || ss.qs.length === 0) {
-    startStudy(sec);
-    return;
-  }
-  if (ss.idx >= ss.qs.length) {
-    renderResult(sec);
-    return;
-  }
-
-  const q     = ss.qs[ss.idx];
+  if (ss.secId !== sec.id || ss.qs.length === 0) { startStudy(sec); return; }
+  if (ss.idx >= ss.qs.length) { renderResult(sec); return; }
+  const q = ss.qs[ss.idx];
   const total = ss.qs.length;
-  const pct   = Math.round((ss.idx / total) * 100);
-
-  // 未回答時のみ選択肢をシャッフル
-  if (ss.chosen.length === 0) {
-    ss.chosen = shuffle(q.choices.map((_, i) => i));
-  }
-
+  const pct = Math.round((ss.idx/total)*100);
+  if (ss.chosen.length === 0) ss.chosen = shuffle(q.choices.map((_,i)=>i));
   const el = document.getElementById('content');
   el.innerHTML = `
     <div class="order-row">
       <span class="order-label">出題順：</span>
-      <button class="order-btn ${orderMode === 'seq'  ? 'active' : ''}"
-              onclick="setOrderMode('seq')">学習順</button>
-      <button class="order-btn ${orderMode === 'rand' ? 'active' : ''}"
-              onclick="setOrderMode('rand')">ランダム</button>
+      <button class="order-btn ${orderMode==='seq'?'active':''}" onclick="setOrderMode('seq')">学習順</button>
+      <button class="order-btn ${orderMode==='rand'?'active':''}" onclick="setOrderMode('rand')">ランダム</button>
     </div>
     <div class="prog-row">
       <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
-      <div class="prog-text">${ss.idx + 1} / ${total}</div>
+      <div class="prog-text">${ss.idx+1} / ${total}</div>
     </div>
     <div class="score-row" id="scoreRow">✅ ${ss.correct} &nbsp;❌ ${ss.wrong}</div>
-
     <div class="q-card">
       <div class="q-num">問 ${q.id}</div>
-      ${q.image ? `<img class="q-img" src="${q.image}" alt="図${q.id}">` : ''}
+      ${q.image?`<img class="q-img" src="${q.image}" alt="図${q.id}">`:''}
       <div class="q-text">${q.text}</div>
     </div>
-
     <div class="choices" id="clist">
-      ${ss.chosen.map((ci, pos) => `
+      ${ss.chosen.map((ci,pos)=>`
         <button class="choice-btn" id="cb${pos}" onclick="pick(${pos})"
-                ${ss.answered ? 'disabled' : ''}>
+                ${ss.answered?'disabled':''}>
           ${q.choices[ci]}
         </button>`).join('')}
     </div>
-
     <div class="feedback" id="fb"></div>
-
     <button class="next-btn" id="nb" onclick="nextQ()" style="display:none;">
-      ${ss.idx + 1 < total ? '次の問題 →' : '結果を見る →'}
-    </button>
-  `;
-
+      ${ss.idx+1<total?'次の問題 →':'結果を見る →'}
+    </button>`;
   doMath(el);
 }
-
 function pick(pos) {
   if (ss.answered) return;
   ss.answered = true;
-
-  const q         = ss.qs[ss.idx];
-  const isCorrect = ss.chosen[pos] === 0; // choices[0] が正解
-
-  if (isCorrect) ss.correct++;
-  else           ss.wrong++;
-
-  // ボタンのスタイル更新
-  ss.chosen.forEach((ci, p) => {
+  const q = ss.qs[ss.idx];
+  const isCorrect = ss.chosen[pos] === 0;
+  if (isCorrect) ss.correct++; else ss.wrong++;
+  ss.chosen.forEach((ci,p)=>{
     const btn = document.getElementById(`cb${p}`);
     if (!btn) return;
     btn.disabled = true;
-    if (ci === 0)      btn.classList.add('correct');
-    else if (p === pos) btn.classList.add('wrong');
+    if (ci===0) btn.classList.add('correct');
+    else if (p===pos) btn.classList.add('wrong');
   });
-
-  // フィードバック
-  const fb   = document.getElementById('fb');
+  const fb = document.getElementById('fb');
   const expl = EXPLANATIONS[q.id] || '';
   if (isCorrect) {
     fb.className = 'feedback ok';
-    fb.innerHTML = `✅ 正解です！${expl ? `<br><span class="fb-expl">💡 ${expl}</span>` : ''}`;
+    fb.innerHTML = `✅ 正解です！${expl?`<br><span class="fb-expl">💡 ${expl}</span>`:''}`;
   } else {
     fb.className = 'feedback ng';
-    fb.innerHTML = `❌ 不正解。正解は「${q.choices[0]}」です。${expl ? `<br><span class="fb-expl">💡 ${expl}</span>` : ''}`;
+    fb.innerHTML = `❌ 不正解。正解は「${q.choices[0]}」です。${expl?`<br><span class="fb-expl">💡 ${expl}</span>`:''}`;
   }
   doMath(fb);
-
-  // スコア更新
   document.getElementById('scoreRow').innerHTML = `✅ ${ss.correct} &nbsp;❌ ${ss.wrong}`;
-
-  // 次へボタン表示
   document.getElementById('nb').style.display = 'block';
 }
-
 function nextQ() {
-  ss.idx++;
-  ss.answered = false;
-  ss.chosen   = [];
-  renderStudy(SECTIONS.find(s => s.id === curSec));
+  ss.idx++; ss.answered = false; ss.chosen = [];
+  renderStudy(SECTIONS.find(s=>s.id===curSec));
 }
-
 function renderResult(sec) {
-  const total = ss.qs.length;
-  const c     = ss.correct;
-  const pct   = Math.round((c / total) * 100);
-  const emoji = pct >= 90 ? '🎉' : pct >= 70 ? '👍' : pct >= 50 ? '🤔' : '😢';
-
+  const total = ss.qs.length, c = ss.correct;
+  const pct = Math.round((c/total)*100);
+  const emoji = pct>=90?'🎉':pct>=70?'👍':pct>=50?'🤔':'😢';
   document.getElementById('content').innerHTML = `
     <div class="result-card">
       <div class="result-emoji">${emoji}</div>
       <div class="result-score">${c}</div>
       <div class="result-total">/ ${total} 問正解</div>
       <div class="result-pct">正答率 ${pct}%</div>
-      <button class="retry-btn"
-              onclick="startStudy(SECTIONS.find(s=>s.id===${curSec}))">
+      <button class="retry-btn" onclick="startStudy(SECTIONS.find(s=>s.id===${curSec}))">
         🔄 もう一度やり直す
       </button>
     </div>`;
 }
 
 // ============================================================
-// 送信モード
+// 学習記録モード
 // ============================================================
 function renderSubmit(sec) {
-  if (sm.secId !== sec.id || !sm.started) {
-    renderSubmitIntro(sec);
-    return;
-  }
-  if (sm.idx >= sec.questions.length) {
-    renderSubmitFinal(sec);
-    return;
-  }
+  if (sm.secId !== sec.id || !sm.started) { renderSubmitIntro(sec); return; }
+  if (sm.idx >= sec.questions.length) { renderSubmitFinal(sec); return; }
   renderSubmitQuestion(sec);
 }
-
-/* ── 氏名入力画面 ── */
 function renderSubmitIntro(sec) {
   document.getElementById('content').innerHTML = `
     <div class="name-card">
       <label class="name-label" for="snum">組番号を入力してください</label>
-      <input type="number" class="name-input" id="snum"
-             placeholder="例：801～940"
-             min="801" max="940"
-             value="${sm.secId === sec.id ? sm.num : ''}">
+      <input type="text" class="name-input" id="snum"
+             placeholder="例：C01～E40"
+             value="${sm.secId===sec.id?sm.num:''}">
     </div>
     <div class="name-card">
       <label class="name-label" for="sname">氏名を入力してください</label>
       <input type="text" class="name-input" id="sname"
              placeholder="例：湘南 太郎"
-             value="${sm.secId === sec.id ? sm.name : ''}">
+             value="${sm.secId===sec.id?sm.name:''}">
     </div>
     <button class="sm-start-btn" onclick="startSubmitQuiz(${sec.id})">
       ✏️ 回答を開始する（全 ${sec.questions.length} 問）
     </button>`;
 }
-
 function startSubmitQuiz(secId) {
   const num  = document.getElementById('snum').value.trim();
   const name = document.getElementById('sname').value.trim();
   if (!num)  { alert('組番号を入力してください。'); return; }
   if (!name) { alert('氏名を入力してください。');   return; }
-  sm.secId    = secId;
-  sm.num      = num;
-  sm.name     = name;
-  sm.started  = true;
-  sm.idx      = 0;
-  sm.answered = false;
-  sm.answers  = {};
-  sm.chosen   = [];
-  renderSubmit(SECTIONS.find(s => s.id === secId));
+  sm.secId=secId; sm.num=num; sm.name=name; sm.started=true;
+  sm.idx=0; sm.answered=false; sm.answers={}; sm.chosen=[];
+  renderSubmit(SECTIONS.find(s=>s.id===secId));
 }
-
-/* ── 一問表示 ── */
 function renderSubmitQuestion(sec) {
-  const q     = sec.questions[sm.idx];
+  const q = sec.questions[sm.idx];
   const total = sec.questions.length;
-  const pct   = Math.round((sm.idx / total) * 100);
-
-  if (sm.chosen.length === 0) {
-    sm.chosen = shuffle(q.choices.map((_, i) => i));
-  }
-
-  const expl       = EXPLANATIONS[q.id] || '';
-  const selectedCi = sm.answers[q.id]; // undefined なら未回答
-
+  const pct = Math.round((sm.idx/total)*100);
+  if (sm.chosen.length===0) sm.chosen = shuffle(q.choices.map((_,i)=>i));
+  const expl = EXPLANATIONS[q.id] || '';
+  const selectedCi = sm.answers[q.id];
   const el = document.getElementById('content');
   el.innerHTML = `
     <div class="prog-row">
       <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
-      <div class="prog-text">${sm.idx + 1} / ${total}</div>
+      <div class="prog-text">${sm.idx+1} / ${total}</div>
     </div>
-
     <div class="q-card">
       <div class="q-num">問 ${q.id}</div>
-      ${q.image ? `<img class="q-img" src="${q.image}" alt="図${q.id}">` : ''}
+      ${q.image?`<img class="q-img" src="${q.image}" alt="図${q.id}">`:''}
       <div class="q-text">${q.text}</div>
     </div>
-
     <div class="choices">
-      ${sm.chosen.map((ci, pos) => {
-        let cls = '';
-        if (sm.answered) {
-          if (ci === 0)                           cls = 'correct';
-          else if (ci === selectedCi && ci !== 0) cls = 'wrong';
+      ${sm.chosen.map((ci,pos)=>{
+        let cls='';
+        if(sm.answered){
+          if(ci===0) cls='correct';
+          else if(ci===selectedCi&&ci!==0) cls='wrong';
         }
-        return `
-          <button class="choice-btn ${cls}" id="smcb${pos}"
+        return `<button class="choice-btn ${cls}" id="smcb${pos}"
                   onclick="pickSubmit(${pos})"
-                  ${sm.answered ? 'disabled' : ''}>
-            ${q.choices[ci]}
-          </button>`;
+                  ${sm.answered?'disabled':''}>
+          ${q.choices[ci]}
+        </button>`;
       }).join('')}
     </div>
-
-    ${sm.answered ? `
+    ${sm.answered?`
       <div class="sm-explanation">
         <span class="sm-expl-icon">💡</span>
         <span>${expl}</span>
       </div>
       <button class="next-btn" onclick="nextSubmitQ()">
-        ${sm.idx + 1 < total ? '次の問題 →' : '✅ 送信画面へ →'}
+        ${sm.idx+1<total?'次の問題 →':'✅ 送信画面へ →'}
       </button>
-    ` : ''}
-  `;
-
+    `:''}`;
   doMath(el);
 }
-
 function pickSubmit(pos) {
   if (sm.answered) return;
   sm.answered = true;
-  const sec = SECTIONS.find(s => s.id === sm.secId);
-  const q   = sec.questions[sm.idx];
-  sm.answers[q.id] = sm.chosen[pos]; // 元インデックスを保存
+  const sec = SECTIONS.find(s=>s.id===sm.secId);
+  const q = sec.questions[sm.idx];
+  sm.answers[q.id] = sm.chosen[pos];
   renderSubmitQuestion(sec);
 }
-
 function nextSubmitQ() {
-  sm.idx++;
-  sm.answered = false;
-  sm.chosen   = [];
-  renderSubmit(SECTIONS.find(s => s.id === sm.secId));
+  sm.idx++; sm.answered=false; sm.chosen=[];
+  renderSubmit(SECTIONS.find(s=>s.id===sm.secId));
 }
-
-/* ── 送信確認画面 ── */
 function renderSubmitFinal(sec) {
   document.getElementById('content').innerHTML = `
     <div class="sm-final-card">
@@ -1109,85 +1129,52 @@ function renderSubmitFinal(sec) {
     </div>`;
 }
 
-// ★ デプロイ後にGAS URLをここに設定 ★
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbyCP6bSJ7BzOEG0vWzTmpEYUM9hmU4mL7JPSXNl6oemUU4rSvNFzFWHS4TxtWGOKQUT/exec';
-
-let _gasParams = null; // 再送信用パラメータ
-let _gasMeta   = null; // 再送信用メタ情報
+let _gasParams = null, _gasMeta = null;
 
 function doSubmit(secId) {
-  const sec = SECTIONS.find(s => s.id === secId);
+  const sec = SECTIONS.find(s=>s.id===secId);
   let correct = 0;
-  sec.questions.forEach(q => { if (sm.answers[q.id] === 0) correct++; });
-
-  _gasMeta = {
-    num: sm.num, name: sm.name,
-    correct, total: sec.questions.length
-  };
+  sec.questions.forEach(q=>{ if(sm.answers[q.id]===0) correct++; });
+  _gasMeta = {num:sm.num, name:sm.name, correct, total:sec.questions.length};
   _gasParams = new URLSearchParams({
-    num      : sm.num,
-    name     : sm.name,
-    section  : sec.label,
-    correct  : String(correct),
-    total    : String(sec.questions.length),
+    num:sm.num, name:sm.name, section:sec.label,
+    correct:String(correct), total:String(sec.questions.length),
     timestamp: new Date().toLocaleString('ja-JP')
   });
-
-  // 各問の正誤を個別パラメータとして追加（○/×）
-  sec.questions.forEach(q => {
-    _gasParams.append('q' + q.id, sm.answers[q.id] === 0 ? '○' : '×');
-  });
-
+  sec.questions.forEach(q=>{ _gasParams.append('q'+q.id, sm.answers[q.id]===0?'○':'×'); });
   const btn = document.getElementById('sbtn');
-  btn.disabled    = true;
-  btn.textContent = '📤 送信中…';
-
+  btn.disabled = true; btn.textContent = '📤 送信中…';
   trySend(btn, 1);
 }
-
 async function trySend(btn, attempt) {
   const MAX_RETRY = 3;
   try {
-    if (btn) {
-      btn.textContent = attempt === 1
-        ? '📤 送信中…'
-        : `🔄 再送信中… (${attempt}/${MAX_RETRY})`;
-    }
-
-    // GETリクエスト（no-cors：CORSエラーを回避）
-    await fetch(`${GAS_URL}?${_gasParams}`, { method: 'GET', mode: 'no-cors' });
-
-    // 例外なく完了 → GASに到達したと判断
-    const { num, name, correct, total } = _gasMeta;
+    if(btn) btn.textContent = attempt===1?'📤 送信中…':`🔄 再送信中… (${attempt}/${MAX_RETRY})`;
+    await fetch(`${GAS_URL}?${_gasParams}`, {method:'GET', mode:'no-cors'});
+    const {num, name, correct, total} = _gasMeta;
     document.getElementById('sresult').innerHTML = `
       <div class="sub-result ok">
         ✅ 送信完了しました。お疲れ様でした！<br>
         <strong>${num}　${name}</strong> さんの得点：<strong>${correct} / ${total}</strong>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
-        <button class="next-btn" onclick="setMode('study')">
-          📖 自習モードで学習する
-        </button>
-        <button class="next-btn"
-                style="background:#059669;"
-                onclick="sm.started=false; setMode('submit')">
-          📤 送信モードでもう一度
-        </button>
+        <button class="next-btn" onclick="setMode('study')">📖 自習モードで学習する</button>
+        <button class="next-btn" style="background:#059669;"
+                onclick="sm.started=false; setMode('submit')">📋 学習記録モードでもう一度</button>
       </div>`;
-
-  } catch (e) {
+  } catch(e) {
     if (attempt < MAX_RETRY) {
-      await new Promise(r => setTimeout(r, 2000)); // 2秒待ってリトライ
-      await trySend(btn, attempt + 1);
+      await new Promise(r=>setTimeout(r,2000));
+      await trySend(btn, attempt+1);
     } else {
-      // 全リトライ失敗
-      const { num, name, correct, total } = _gasMeta;
+      const {num, name, correct, total} = _gasMeta;
       document.getElementById('sresult').innerHTML = `
         <div class="sub-result warn">
           ❌ 送信に失敗しました。ネットワークを確認してもう一度お試しください。<br>
           <strong>${num}　${name}</strong> さんの得点：<strong>${correct} / ${total}</strong>
         </div>`;
-      if (btn) { btn.disabled = false; btn.textContent = '📤 もう一度送信する'; }
+      if(btn){ btn.disabled=false; btn.textContent='📤 もう一度送信する'; }
     }
   }
 }
@@ -1195,11 +1182,218 @@ async function trySend(btn, attempt) {
 // ============================================================
 // 初期化
 // ============================================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', ()=>{
   buildTabs();
   document.getElementById('modeStudy').classList.add('active');
   render();
 });
+</script>
+
+<script>
+window._kirchhoffBodyHtml = "<div class=\"wrap\">\n\n  <header class=\"hero\">\n    <p class=\"eyebrow\">\u7269\u7406\u57fa\u790e / \u96fb\u6c17\u56de\u8def</p>\n    <h1>\u30ad\u30eb\u30d2\u30db\u30c3\u30d5\u306e\u6cd5\u5247 \u2015 \u56de\u8def\u306e\u96fb\u6d41\u3092\u6c42\u3081\u3088\u3046</h1>\n    <p class=\"sub\">\u6570\u5024\u306f\u51fa\u984c\u3054\u3068\u306b\u30e9\u30f3\u30c0\u30e0\u3002\u51685\u554f\u3067\u3059\u3002\u56f3\u306e\u96fb\u6d41\u306e\u5411\u304d\u3092\u524d\u63d0\u306b\u7b54\u3048\u3066\u304f\u3060\u3055\u3044\u3002</p>\n  </header>\n\n  <section class=\"card\">\n    <h2>\u56de\u8def\u56f3</h2>\n    <svg class=\"schematic\" viewBox=\"0 0 520 380\" role=\"img\" aria-label=\"\u4e8c\u91cd\u30eb\u30fc\u30d7\u56de\u8def\u3002I1\u3068I2\u306f\u4e0a\u5411\u304d\u3001I3\u306f\u4e0b\u5411\u304d\u3092\u96fb\u6d41\u306e\u6b63\u306e\u5411\u304d\u3068\u3059\u308b\u3002\">\n      <path class=\"wire\" d=\"M90 70 H430\"/><path class=\"wire\" d=\"M90 310 H430\"/>\n      <path class=\"wire\" d=\"M90 70 V110\"/><rect class=\"comp\" x=\"77\" y=\"110\" width=\"26\" height=\"40\" rx=\"2\"/>\n      <path class=\"wire\" d=\"M90 150 V210\"/>\n      <line class=\"batt\" x1=\"72\" y1=\"212\" x2=\"108\" y2=\"212\" stroke-width=\"2.6\"/>\n      <line class=\"batt\" x1=\"82\" y1=\"224\" x2=\"98\" y2=\"224\" stroke-width=\"5\"/>\n      <path class=\"wire\" d=\"M90 224 V310\"/>\n      <path class=\"wire\" d=\"M260 70 V160\"/><rect class=\"comp\" x=\"247\" y=\"160\" width=\"26\" height=\"40\" rx=\"2\"/>\n      <path class=\"wire\" d=\"M260 200 V310\"/>\n      <path class=\"wire\" d=\"M430 70 V110\"/><rect class=\"comp\" x=\"417\" y=\"110\" width=\"26\" height=\"40\" rx=\"2\"/>\n      <path class=\"wire\" d=\"M430 150 V210\"/>\n      <line class=\"batt\" x1=\"412\" y1=\"212\" x2=\"448\" y2=\"212\" stroke-width=\"2.6\"/>\n      <line class=\"batt\" x1=\"422\" y1=\"224\" x2=\"438\" y2=\"224\" stroke-width=\"5\"/>\n      <path class=\"wire\" d=\"M430 224 V310\"/>\n      <circle class=\"aPulse\" cx=\"260\" cy=\"70\" r=\"6\"/>\n      <circle class=\"node\" cx=\"90\" cy=\"70\" r=\"4\"/><circle class=\"node\" cx=\"260\" cy=\"70\" r=\"4\"/><circle class=\"node\" cx=\"430\" cy=\"70\" r=\"4\"/>\n      <circle class=\"node\" cx=\"90\" cy=\"310\" r=\"4\"/><circle class=\"node\" cx=\"260\" cy=\"310\" r=\"4\"/><circle class=\"node\" cx=\"430\" cy=\"310\" r=\"4\"/>\n      <text class=\"nodelab\" x=\"260\" y=\"58\" text-anchor=\"middle\">A</text>\n      <text class=\"nodelab\" x=\"260\" y=\"332\" text-anchor=\"middle\">B</text>\n      <text class=\"lab\" x=\"112\" y=\"126\">R\u2081</text><text class=\"lab-val\" id=\"vR1\" x=\"112\" y=\"142\">2 \u03a9</text>\n      <text class=\"lab\" x=\"112\" y=\"210\">V\u2081</text><text class=\"lab-val\" id=\"vV1\" x=\"112\" y=\"226\">10 V</text>\n      <text class=\"lab\" x=\"282\" y=\"176\">R\u2083</text><text class=\"lab-val\" id=\"vR3\" x=\"282\" y=\"192\">1 \u03a9</text>\n      <text class=\"lab\" x=\"408\" y=\"126\" text-anchor=\"end\">R\u2082</text><text class=\"lab-val\" id=\"vR2\" x=\"408\" y=\"142\" text-anchor=\"end\">4 \u03a9</text>\n      <text class=\"lab\" x=\"408\" y=\"210\" text-anchor=\"end\">V\u2082</text><text class=\"lab-val\" id=\"vV2\" x=\"408\" y=\"226\" text-anchor=\"end\">8 V</text>\n      <path class=\"arrow\" d=\"M58 290 V262\"/><path class=\"arrowhead\" d=\"M58 256 l5 9 h-10 z\"/>\n      <text class=\"cur\" x=\"44\" y=\"284\" text-anchor=\"end\">I\u2081</text>\n      <path class=\"arrow\" d=\"M462 290 V262\"/><path class=\"arrowhead\" d=\"M462 256 l5 9 h-10 z\"/>\n      <text class=\"cur\" x=\"476\" y=\"284\">I\u2082</text>\n      <path class=\"arrow\" d=\"M300 235 V263\"/><path class=\"arrowhead\" d=\"M300 269 l5 -9 h-10 z\"/>\n      <text class=\"cur\" x=\"316\" y=\"252\">I\u2083</text>\n      <circle class=\"dot up\" cx=\"90\" cy=\"300\" r=\"3.4\"/><circle class=\"dot up d2\" cx=\"90\" cy=\"300\" r=\"3.4\"/><circle class=\"dot up d3\" cx=\"90\" cy=\"300\" r=\"3.4\"/>\n      <circle class=\"dot up\" cx=\"430\" cy=\"300\" r=\"3.4\"/><circle class=\"dot up d2\" cx=\"430\" cy=\"300\" r=\"3.4\"/><circle class=\"dot up d3\" cx=\"430\" cy=\"300\" r=\"3.4\"/>\n      <circle class=\"dot dn\" cx=\"260\" cy=\"78\" r=\"3.4\"/><circle class=\"dot dn d2\" cx=\"260\" cy=\"78\" r=\"3.4\"/><circle class=\"dot dn d3\" cx=\"260\" cy=\"78\" r=\"3.4\"/>\n      <circle class=\"dot rt\" cx=\"94\" cy=\"70\" r=\"3.4\"/><circle class=\"dot rt d2\" cx=\"94\" cy=\"70\" r=\"3.4\"/><circle class=\"dot rt d3\" cx=\"94\" cy=\"70\" r=\"3.4\"/>\n      <circle class=\"dot lt\" cx=\"426\" cy=\"70\" r=\"3.4\"/><circle class=\"dot lt d2\" cx=\"426\" cy=\"70\" r=\"3.4\"/><circle class=\"dot lt d3\" cx=\"426\" cy=\"70\" r=\"3.4\"/>\n      <circle class=\"dot lt\" cx=\"256\" cy=\"310\" r=\"3.4\"/><circle class=\"dot lt d2\" cx=\"256\" cy=\"310\" r=\"3.4\"/><circle class=\"dot lt d3\" cx=\"256\" cy=\"310\" r=\"3.4\"/>\n      <circle class=\"dot rt\" cx=\"264\" cy=\"310\" r=\"3.4\"/><circle class=\"dot rt d2\" cx=\"264\" cy=\"310\" r=\"3.4\"/><circle class=\"dot rt d3\" cx=\"264\" cy=\"310\" r=\"3.4\"/>\n    </svg>\n    <p class=\"note\">\u77e2\u5370\u306f\u96fb\u6d41\u306e<b>\u6b63\u306e\u5411\u304d\uff08\u4eee\u5b9a\u3057\u305f\u5411\u304d\uff09</b>\u3067\u3059\u3002\u7b54\u3048\u304c\u8ca0\u306a\u3089\u3001\u5b9f\u969b\u306f\u77e2\u5370\u3068\u9006\u5411\u304d\u306b\u6d41\u308c\u3066\u3044\u307e\u3059\u3002</p>\n    <div class=\"given\">\n      <span class=\"chip\">V\u2081 = <b id=\"cV1\">10</b> V</span>\n      <span class=\"chip\">V\u2082 = <b id=\"cV2\">8</b> V</span>\n      <span class=\"chip\">R\u2081 = <b id=\"cR1\">2</b> \u03a9</span>\n      <span class=\"chip\">R\u2082 = <b id=\"cR2\">4</b> \u03a9</span>\n      <span class=\"chip\">R\u2083 = <b id=\"cR3\">1</b> \u03a9</span>\n    </div>\n    <button class=\"reroll\" id=\"reroll\">\u6570\u5024\u3092\u5909\u3048\u3066\u65b0\u3057\u3044\u554f\u984c</button>\n  </section>\n\n  <section class=\"card\" id=\"q1\">\n    <h2><span class=\"no\">\u7b2c1\u554f</span>\u7b2c\u4e8c\u6cd5\u5247 \u2015 \u5de6\u30eb\u30fc\u30d7</h2>\n    <p class=\"prompt\">\u56f3\u306e <b>\u5de6\u5074\u306e\u9589\u56de\u8def\uff08V\u2081 \u2192 R\u2081 \u2192 R\u2083 \u3092\u305f\u3069\u308b\u7d4c\u8def\uff09</b> \u306b\u3064\u3044\u3066\u3001\u7b2c\u4e8c\u6cd5\u5247\u3092\u6b63\u3057\u304f\u8868\u3059\u5f0f\u3092\u9078\u3093\u3067\u304f\u3060\u3055\u3044\u3002</p>\n    <div class=\"choices\" id=\"c1\"></div>\n    <button class=\"btn\" id=\"b1\" disabled>\u89e3\u7b54\u3059\u308b</button>\n    <div class=\"feedback\" id=\"f1\"></div>\n  </section>\n\n  <section class=\"card\" id=\"q2\">\n    <h2><span class=\"no\">\u7b2c2\u554f</span>\u7b2c\u4e8c\u6cd5\u5247 \u2015 \u53f3\u30eb\u30fc\u30d7</h2>\n    <p class=\"prompt\">\u56f3\u306e <b>\u53f3\u5074\u306e\u9589\u56de\u8def\uff08V\u2082 \u2192 R\u2082 \u2192 R\u2083 \u3092\u305f\u3069\u308b\u7d4c\u8def\uff09</b> \u306b\u3064\u3044\u3066\u3001\u7b2c\u4e8c\u6cd5\u5247\u3092\u6b63\u3057\u304f\u8868\u3059\u5f0f\u3092\u9078\u3093\u3067\u304f\u3060\u3055\u3044\u3002</p>\n    <div class=\"choices\" id=\"c2\"></div>\n    <button class=\"btn\" id=\"b2\" disabled>\u89e3\u7b54\u3059\u308b</button>\n    <div class=\"feedback\" id=\"f2\"></div>\n  </section>\n\n  <section class=\"card\" id=\"q3\">\n    <h2><span class=\"no\">\u7b2c3\u554f</span>\u7b2c\u4e8c\u6cd5\u5247 \u2015 \u5916\u30eb\u30fc\u30d7</h2>\n    <p class=\"prompt\">\u56f3\u306e <b>\u5916\u5074\u306e\u9589\u56de\u8def\uff08V\u2081 \u2192 R\u2081 \u2192 \u7bc0\u70b9A \u2192 R\u2082 \u2192 V\u2082 \u2192 \u7bc0\u70b9B \u3092\u305f\u3069\u308b\u7d4c\u8def\uff09</b> \u306b\u3064\u3044\u3066\u3001\u7b2c\u4e8c\u6cd5\u5247\u3092\u6b63\u3057\u304f\u8868\u3059\u5f0f\u3092\u9078\u3093\u3067\u304f\u3060\u3055\u3044\u3002\u3053\u306e\u7d4c\u8def\u306f <b>R\u2083 \u3092\u901a\u308a\u307e\u305b\u3093</b>\u3002</p>\n    <div class=\"choices\" id=\"c3\"></div>\n    <button class=\"btn\" id=\"b3\" disabled>\u89e3\u7b54\u3059\u308b</button>\n    <div class=\"feedback\" id=\"f3\"></div>\n  </section>\n\n  <section class=\"card\" id=\"q4\">\n    <h2><span class=\"no\">\u7b2c4\u554f</span>\u7b2c\u4e00\u6cd5\u5247 \u2015 \u7bc0\u70b9A</h2>\n    <p class=\"prompt\">\u7bc0\u70b9A \u306b\u3064\u3044\u3066\u3001\u30ad\u30eb\u30d2\u30db\u30c3\u30d5\u306e\u7b2c\u4e00\u6cd5\u5247\uff08\u96fb\u6d41\u5247\uff09\u3092\u6b63\u3057\u304f\u8868\u3059\u5f0f\u3092\u9078\u3093\u3067\u304f\u3060\u3055\u3044\u3002\u56f3\u3067\u306f <span class=\"eq\">I\u2081, I\u2082</span> \u304c\u7bc0\u70b9A\u306b\u6d41\u308c\u8fbc\u307f\u3001<span class=\"eq\">I\u2083</span> \u304c\u6d41\u308c\u51fa\u307e\u3059\u3002</p>\n    <div class=\"choices\" id=\"c4\"></div>\n    <button class=\"btn\" id=\"b4\" disabled>\u89e3\u7b54\u3059\u308b</button>\n    <div class=\"feedback\" id=\"f4\"></div>\n  </section>\n\n  <section class=\"card\" id=\"q5\">\n    <h2><span class=\"no\">\u7b2c5\u554f</span>\u5404\u62b5\u6297\u306b\u6d41\u308c\u308b\u96fb\u6d41</h2>\n    <p class=\"prompt\">\u62b5\u6297 R\u2081\u301cR\u2083 \u306b\u6d41\u308c\u308b\u96fb\u6d41 <span class=\"eq\">I\u2081, I\u2082, I\u2083</span> \u306e\u5024\u306e\u7d44\u3068\u3057\u3066\u6b63\u3057\u3044\u3082\u306e\u3092\u9078\u3093\u3067\u304f\u3060\u3055\u3044\u3002</p>\n    <div class=\"choices\" id=\"c5\"></div>\n    <button class=\"btn\" id=\"b5\" disabled>\u89e3\u7b54\u3059\u308b</button>\n    <div class=\"feedback\" id=\"f5\"></div>\n  </section>\n\n  <section class=\"card score\" id=\"result\" style=\"display:none\">\n    <h2>\u7d50\u679c</h2>\n    <div class=\"big\"><span class=\"accent\" id=\"sc\">0</span> / 5 \u554f\u6b63\u89e3</div>\n    <p id=\"scmsg\"></p>\n    <button class=\"btn\" id=\"retry\">\u6570\u5024\u3092\u5909\u3048\u3066\u3082\u3046\u4e00\u5ea6</button>\n  </section>\n\n  <p class=\"foot\">\u6e58\u5357\u9ad8\u6821 \u7269\u7406 / \u30ad\u30eb\u30d2\u30db\u30c3\u30d5\u306e\u6cd5\u5247 \u6f14\u7fd2</p>\n</div>";
+window._kirchhoffInit = function(){
+
+(function(){
+  "use strict";
+  var $=function(id){return document.getElementById(id);};
+  function ri(a,b){return a+Math.floor(Math.random()*(b-a+1));}
+  function pick(a){return a[Math.floor(Math.random()*a.length)];}
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function sgn(x){return (x<0?"−":"")+Math.abs(x);}      // U+2212
+  function coef(r,sym){return (r===1?"":r)+sym;}          // 1I₃ -> I₃
+
+  var KEYS=["q1","q2","q3","q4","q5"];
+
+  // ---- 問題生成（整数の電流・抵抗から電圧を逆算）----
+  function generate(){
+    var Is=[-3,-2,-1,1,2,3,4], forceRev=Math.random()<0.5;
+    for(var t=0;t<6000;t++){
+      var R1=ri(1,5),R2=ri(1,5),R3=ri(1,4),I1=pick(Is),I2=pick(Is);
+      if(I1===0||I2===0) continue;
+      var I3=I1+I2; if(I3<1||I3>6) continue;            // I3 は必ず正（下向き）
+      var V1=R1*I1+R3*I3, V2=R2*I2+R3*I3;
+      if(V1<2||V2<2||V1>20||V2>20) continue;            // 両電源とも上向きに駆動
+      if(R2*I2===R3*I3) continue;                       // 左ループの誤答が偶然成立しないように
+      if(R1*I1===R3*I3) continue;                       // 右ループの誤答が偶然成立しないように
+      var rev=(I1<0||I2<0); if(forceRev!==rev) continue;
+      if(I1===I2&&R1===R2) continue;
+      return {R1:R1,R2:R2,R3:R3,V1:V1,V2:V2,I1:I1,I2:I2,I3:I3};
+    }
+    return {R1:2,R2:1,R3:2,V1:2,V2:7,I1:-1,I2:3,I3:2};
+  }
+
+  // ---- 選択肢 ----
+  function choicesLoopLeft(p){return shuffle([
+    {t:p.V1+" = "+coef(p.R1,"I₁")+" + "+coef(p.R3,"I₃"), correct:true},
+    {t:p.V1+" = "+coef(p.R1,"I₁")+" − "+coef(p.R3,"I₃"), correct:false},
+    {t:p.V1+" = "+coef(p.R1,"I₁")+" + "+coef(p.R2,"I₂"), correct:false},
+    {t:p.V1+" = "+coef(p.R3,"I₃")+" − "+coef(p.R1,"I₁"), correct:false}
+  ]);}
+  function choicesLoopRight(p){return shuffle([
+    {t:p.V2+" = "+coef(p.R2,"I₂")+" + "+coef(p.R3,"I₃"), correct:true},
+    {t:p.V2+" = "+coef(p.R2,"I₂")+" − "+coef(p.R3,"I₃"), correct:false},
+    {t:p.V2+" = "+coef(p.R2,"I₂")+" + "+coef(p.R1,"I₁"), correct:false},
+    {t:p.V2+" = "+coef(p.R3,"I₃")+" − "+coef(p.R2,"I₂"), correct:false}
+  ]);}
+  function choicesLoopOuter(p){return shuffle([
+    {t:p.V1+" − "+p.V2+" = "+coef(p.R1,"I₁")+" − "+coef(p.R2,"I₂"), correct:true},
+    {t:p.V1+" − "+p.V2+" = "+coef(p.R1,"I₁")+" + "+coef(p.R2,"I₂"), correct:false},
+    {t:p.V1+" + "+p.V2+" = "+coef(p.R1,"I₁")+" − "+coef(p.R2,"I₂"), correct:false},
+    {t:p.V1+" − "+p.V2+" = "+coef(p.R1,"I₁")+" − "+coef(p.R2,"I₂")+" + "+coef(p.R3,"I₃"), correct:false}
+  ]);}
+  function choicesNode(){return shuffle([
+    {t:"I₁ + I₂ = I₃", correct:true},
+    {t:"I₁ + I₂ + I₃ = 0", correct:false},
+    {t:"I₁ = I₂ + I₃", correct:false},
+    {t:"I₁ + I₃ = I₂", correct:false}
+  ]);}
+  function fmtI(a){return "I₁="+sgn(a[0])+" A, I₂="+sgn(a[1])+" A, I₃="+sgn(a[2])+" A";}
+  function choicesCurrents(p){
+    var correct=[p.I1,p.I2,p.I3], pool=[], seen={};
+    seen[correct.join(",")]=1;
+    function add(a){
+      if(a.some(function(x){return Math.abs(x)>9||!isFinite(x);}))return;
+      var k=a.join(","); if(seen[k])return; seen[k]=1; pool.push(a);
+    }
+    add([p.I2,p.I1,p.I3]);
+    add([Math.abs(p.I1),Math.abs(p.I2),Math.abs(p.I1)+Math.abs(p.I2)]);
+    add([p.I1+1,p.I2-1,p.I3]); add([p.I1-1,p.I2+1,p.I3]);
+    add([p.I1,p.I2,p.I3+1]); add([p.I1,p.I2,p.I3-1]);
+    add([p.I3,p.I2,p.I1]); add([p.I1,p.I3,p.I2]);
+    add([-p.I1,p.I2,-p.I1+p.I2]); add([p.I1,-p.I2,p.I1-p.I2]);
+    var g=0; while(pool.length<5&&g++<40){var d=[p.I1+ri(-2,2),p.I2+ri(-2,2),0];d[2]=d[0]+d[1];add(d);}
+    var opts=shuffle(pool).slice(0,5).map(function(a){return {t:fmtI(a),correct:false};});
+    opts.push({t:fmtI(correct),correct:true});
+    return shuffle(opts);
+  }
+
+  // ---- 解説 ----
+  function workLeft(p){return "V₁ = R₁I₁ + R₃I₃\n  → "+p.V1+" = "+coef(p.R1,"I₁")+" + "+coef(p.R3,"I₃");}
+  function workRight(p){return "V₂ = R₂I₂ + R₃I₃\n  → "+p.V2+" = "+coef(p.R2,"I₂")+" + "+coef(p.R3,"I₃");}
+  function workOuter(p){return "外ループは R₃ を通りません。\n（左ループ）−（右ループ）より\n  V₁ − V₂ = R₁I₁ − R₂I₂\n  → "+p.V1+" − "+p.V2+" = "+coef(p.R1,"I₁")+" − "+coef(p.R2,"I₂");}
+  function workNode(){return "節点Aに流れ込む電流の和 = 流れ出る電流の和\n  I₁ + I₂ = I₃";}
+  function workCurrents(p){
+    return "① "+p.V1+" = "+coef(p.R1,"I₁")+" + "+coef(p.R3,"I₃")+"\n"+
+           "② "+p.V2+" = "+coef(p.R2,"I₂")+" + "+coef(p.R3,"I₃")+"\n"+
+           "③ I₁ + I₂ = I₃\n\n"+
+           "③を①②へ代入\n"+
+           "   "+p.V1+" = "+coef(p.R1+p.R3,"I₁")+" + "+coef(p.R3,"I₂")+"\n"+
+           "   "+p.V2+" = "+coef(p.R3,"I₁")+" + "+coef(p.R2+p.R3,"I₂")+"\n\n"+
+           "解くと → I₁="+sgn(p.I1)+" A,  I₂="+sgn(p.I2)+" A,  I₃="+sgn(p.I3)+" A";
+  }
+  function revNote(p){
+    var s="";
+    if(p.I1<0) s+="I₁ が負 → 左の枝（R₁・V₁）の電流は図の矢印と逆向き（下向き）に流れています。";
+    if(p.I2<0) s+="I₂ が負 → 右の枝（R₂・V₂）の電流は図の矢印と逆向き（下向き）に流れています。";
+    return s;
+  }
+
+  // ---- 描画 ----
+  var P=null, state;
+  function paintCircuit(p){
+    $("vR1").textContent=p.R1+" Ω"; $("cR1").textContent=p.R1;
+    $("vR2").textContent=p.R2+" Ω"; $("cR2").textContent=p.R2;
+    $("vR3").textContent=p.R3+" Ω"; $("cR3").textContent=p.R3;
+    $("vV1").textContent=p.V1+" V"; $("cV1").textContent=p.V1;
+    $("vV2").textContent=p.V2+" V"; $("cV2").textContent=p.V2;
+  }
+
+  function buildQ(spec, key){
+    var n=key.slice(1);
+    var listEl=$("c"+n), btnEl=$("b"+n), fbEl=$("f"+n), picked=null;
+    listEl.innerHTML=""; listEl.className="choices";
+    fbEl.className="feedback"; fbEl.innerHTML=""; btnEl.disabled=true;
+    spec.choices.forEach(function(c){
+      var lab=document.createElement("label");
+      lab.className="choice"; lab.tabIndex=0;
+      lab.innerHTML='<input type="radio" name="'+key+'"><span class="tick"></span><span class="txt">'+c.t+'</span>';
+      lab._correct=c.correct;
+      function choose(){
+        if(state.done[key])return;
+        Array.prototype.forEach.call(listEl.children,function(x){x.classList.remove("sel");});
+        lab.classList.add("sel"); lab.querySelector("input").checked=true;
+        picked=lab; btnEl.disabled=false;
+      }
+      lab.addEventListener("click",choose);
+      lab.addEventListener("keydown",function(e){if(e.key===" "||e.key==="Enter"){e.preventDefault();choose();}});
+      listEl.appendChild(lab);
+    });
+    btnEl.onclick=function(){
+      if(!picked||state.done[key])return;
+      state.done[key]=true; listEl.classList.add("locked"); btnEl.disabled=true;
+      var isRight=!!picked._correct; state.correct[key]=isRight;
+      Array.prototype.forEach.call(listEl.children,function(x){
+        if(x._correct){x.classList.add("correct");var t=document.createElement("span");t.className="tag ok";t.textContent="正解";x.appendChild(t);}
+        if(x===picked&&!isRight){x.classList.add("wrong");var t=document.createElement("span");t.className="tag ng";t.textContent="あなたの解答";x.appendChild(t);}
+      });
+      fbEl.className="feedback show "+(isRight?"right":"miss");
+      fbEl.innerHTML='<p class="head">'+(isRight?"✓ ":"→ ")+(isRight?spec.headOk:spec.headNg)+'</p>'+
+                     '<p>'+(isRight?spec.bodyOk:spec.bodyNg)+'</p>'+
+                     (spec.note?'<p class="rev">'+spec.note+'</p>':'')+
+                     '<div class="work">'+spec.work+'</div>';
+      maybeFinish();
+    };
+  }
+
+  function maybeFinish(){
+    var allDone=KEYS.every(function(k){return state.done[k];});
+    if(!allDone)return;
+    var n=KEYS.reduce(function(s,k){return s+(state.correct[k]?1:0);},0);
+    $("sc").textContent=n;
+    $("scmsg").textContent = n===5?"全問正解。第一法則・第二法則ともに完璧です。"
+      : n>=3?"よくできました。間違えた問題の解説を確認しましょう。"
+      : "解説を読んで、式の立て方から見直しましょう。";
+    var r=$("result"); r.style.display=""; r.scrollIntoView({behavior:"smooth",block:"center"});
+    // 学習記録モード用：5問の正誤を外部に通知
+    if (window._kirchhoffOnFinish) {
+      var results = KEYS.map(function(k){ return state.correct[k] ? 1 : 0; });
+      window._kirchhoffOnFinish(n, results);
+    }
+  }
+
+  function newProblem(){
+    P=generate(); paintCircuit(P);
+    state={done:{},correct:{}};
+    $("result").style.display="none";
+    var note=revNote(P);
+
+    buildQ({choices:choicesLoopLeft(P),
+      headOk:"正解",headNg:"おしい",
+      bodyOk:"左ループを電流の向きにたどると、R₁ も R₃ も電流の向きと進む向きが一致するので電圧降下は加算。起電力 V₁ がその和に等しくなります。",
+      bodyNg:"符号と、ループに含まれる抵抗を確認しましょう。左ループは R₁・R₃ を通り、どちらも電圧降下は加算です。",
+      note:"", work:workLeft(P)}, "q1");
+
+    buildQ({choices:choicesLoopRight(P),
+      headOk:"正解",headNg:"おしい",
+      bodyOk:"右ループも同様に、R₂ と R₃ の電圧降下の和が起電力 V₂ に等しくなります。",
+      bodyNg:"右ループが通るのは R₂ と R₃ です（R₁ は含みません）。どちらの電圧降下も加算になります。",
+      note:"", work:workRight(P)}, "q2");
+
+    buildQ({choices:choicesLoopOuter(P),
+      headOk:"正解",headNg:"おしい",
+      bodyOk:"外ループは中央の R₃ を通りません。左ループの式から右ループの式を引くと、R₃I₃ が消えて V₁ − V₂ = R₁I₁ − R₂I₂ が得られます。",
+      bodyNg:"外ループは R₃ を通らないので R₃ の項は入りません。右の枝は電流 I₂ と逆向きにたどるため、符号は V₁ − V₂ = R₁I₁ − R₂I₂ となります。",
+      note:"", work:workOuter(P)}, "q3");
+
+    buildQ({choices:choicesNode(),
+      headOk:"正解",headNg:"もう一度",
+      bodyOk:"節点Aでは「流れ込む電流の和 = 流れ出る電流の和」。I₁ と I₂ が流れ込み、I₃ が流れ出るので I₁ + I₂ = I₃ です。",
+      bodyNg:"節点Aに流れ込むのは I₁ と I₂、流れ出るのは I₃ です。流れ込む和と流れ出る和が等しいので I₁ + I₂ = I₃。",
+      note:"", work:workNode()}, "q4");
+
+    buildQ({choices:choicesCurrents(P),
+      headOk:"正解",headNg:"もう一度",
+      bodyOk:"第二法則の2式（左・右）と第一法則を連立し、I₃ を消去して解きます。",
+      bodyNg:"I₁+I₂=I₃ を満たすだけでは不十分です。左右ループの2式も同時に満たす組を選びます。",
+      note:note, work:workCurrents(P)}, "q5");
+  }
+
+  $("reroll").addEventListener("click",function(){newProblem();$("q1").scrollIntoView({behavior:"smooth",block:"start"});});
+  $("retry").addEventListener("click",function(){newProblem();$("q1").scrollIntoView({behavior:"smooth",block:"start"});});
+  newProblem();
+})();
+
+};
 </script>
 </body>
 </html>
