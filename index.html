@@ -756,7 +756,7 @@ const EXPLANATIONS = {
 // 状態管理
 // ============================================================
 let curSec   = 1;
-let curMode  = 'intro';
+let curMode  = 'study';
 let orderMode = 'seq';
 
 const ss = { secId:null, qs:[], idx:0, answered:false, correct:0, wrong:0, chosen:[] };
@@ -1269,7 +1269,7 @@ async function trySend(btn, attempt) {
 // ============================================================
 document.addEventListener('DOMContentLoaded', ()=>{
   buildTabs();
-  document.getElementById('modeIntro').classList.add('active');
+  document.getElementById('modeStudy').classList.add('active');
   render();
 });
 </script>
