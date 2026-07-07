@@ -25,9 +25,11 @@
     .hdr-sub{font-size:12px;opacity:.8;margin-top:4px;min-height:1em;}
 
     /* ===== セクションタブ ===== */
+    .tabs-bar{background:#1e3a8a;}
     .tabs{
-      display:flex;background:#1e3a8a;
+      display:flex;
       overflow-x:auto;-webkit-overflow-scrolling:touch;
+      max-width:600px;margin:0 auto;padding:0 13px;
     }
     .tab{
       flex:1;min-width:60px;padding:10px 4px;text-align:center;
@@ -47,8 +49,8 @@
       overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1);margin-bottom:14px;
     }
     .mode-btn{
-      flex:1;padding:11px 8px;border:none;background:#fff;
-      color:#6b7280;font-size:14px;font-weight:500;
+      flex:1;padding:11px 4px;border:none;background:#fff;
+      color:#6b7280;font-size:13px;font-weight:500;white-space:nowrap;
       cursor:pointer;font-family:inherit;transition:all .2s;
     }
     .mode-btn.active{background:#2563eb;color:#fff;}
@@ -188,6 +190,26 @@
     .coming-title{font-size:18px;font-weight:600;color:#374151;margin-bottom:8px;}
     .coming-text{font-size:14px;}
 
+    /* ===== 初学モード：解答・解説 ===== */
+    .intro-answer{
+      background:#ecfdf5;border:1px solid #6ee7b7;border-radius:10px;
+      padding:14px 18px;margin-bottom:14px;
+    }
+    .intro-answer-label{font-size:11px;font-weight:700;color:#059669;letter-spacing:.5px;margin-bottom:6px;}
+    .intro-answer-text{font-size:16px;font-weight:700;color:#065f46;margin-bottom:10px;line-height:1.6;}
+    .intro-expl{font-size:13.5px;line-height:1.75;color:#374151;border-top:1px dashed #a7f3d0;padding-top:10px;}
+    .intro-expl-icon{margin-right:4px;}
+
+    /* ===== 初学モード完了カード ===== */
+    .done-card{
+      background:#fff;border-radius:16px;padding:40px 24px;
+      text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.1);
+    }
+    .done-icon{font-size:52px;margin-bottom:14px;}
+    .done-title{font-size:18px;font-weight:700;color:#1a202c;margin-bottom:6px;}
+    .done-sub{font-size:13px;color:#64748b;margin-bottom:24px;}
+    .done-actions{display:flex;flex-direction:column;gap:10px;}
+
     /* ===== 学習順/ランダム切替 ===== */
     .order-row{
       display:flex;align-items:center;gap:6px;margin-bottom:10px;
@@ -230,10 +252,11 @@
   <div class="hdr-sub" id="hdrSub"></div>
 </header>
 
-<div class="tabs" id="tabs"></div>
+<div class="tabs-bar"><div class="tabs" id="tabs"></div></div>
 
 <div class="main">
   <div class="mode-row">
+    <button class="mode-btn" id="modeIntro" onclick="setMode('intro')">🔰 初学モード</button>
     <button class="mode-btn" id="modeStudy" onclick="setMode('study')">📖 自習モード</button>
     <button class="mode-btn" id="modeSubmit" onclick="setMode('submit')">📋 学習記録モード</button>
   </div>
@@ -676,9 +699,7 @@ const SECTIONS = [
       }
     ]
   },
-  { id: 3, label: "基本③", subtitle: "キルヒホッフの法則", available: true, kirchhoff: true, questions: [] },
-  { id: 4, label: "基本④", subtitle: "", available: false, questions: [] },
-  { id: 5, label: "基本⑤", subtitle: "", available: false, questions: [] }
+  { id: 3, label: "基本③", subtitle: "キルヒホッフの法則", available: true, kirchhoff: true, questions: [] }
 ];
 
 const EXPLANATIONS = {
@@ -735,12 +756,13 @@ const EXPLANATIONS = {
 // 状態管理
 // ============================================================
 let curSec   = 1;
-let curMode  = 'study';
+let curMode  = 'intro';
 let orderMode = 'seq';
 
 const ss = { secId:null, qs:[], idx:0, answered:false, correct:0, wrong:0, chosen:[] };
 const sm = { secId:null, num:'', name:'', started:false, idx:0, answered:false, answers:{}, chosen:[] };
 const km = { num:'', name:'', started:false };
+const im = { secId:null, idx:0 };
 
 // ============================================================
 // ユーティリティ
@@ -781,11 +803,13 @@ function setSec(id) {
   ss.secId = null;
   sm.started = false;
   km.started = false;
+  im.secId = null;
   buildTabs();
   render();
 }
 function setMode(mode) {
   curMode = mode;
+  document.getElementById('modeIntro' ).classList.toggle('active', mode==='intro' );
   document.getElementById('modeStudy' ).classList.toggle('active', mode==='study' );
   document.getElementById('modeSubmit').classList.toggle('active', mode==='submit');
   render();
@@ -924,8 +948,69 @@ function render() {
     return;
   }
 
-  if (curMode === 'study') renderStudy(sec);
-  else                      renderSubmit(sec);
+  if (curMode === 'intro')      renderIntro(sec);
+  else if (curMode === 'study') renderStudy(sec);
+  else                          renderSubmit(sec);
+}
+
+// ============================================================
+// 初学モード：選択肢なし・解答と解説をはじめから表示
+// ============================================================
+function renderIntro(sec) {
+  if (im.secId !== sec.id) { im.secId = sec.id; im.idx = 0; }
+  if (im.idx >= sec.questions.length) { renderIntroDone(sec); return; }
+
+  const q     = sec.questions[im.idx];
+  const total = sec.questions.length;
+  const pct   = Math.round((im.idx / total) * 100);
+  const expl  = EXPLANATIONS[q.id] || '';
+
+  const el = document.getElementById('content');
+  el.innerHTML = `
+    <div class="prog-row">
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <div class="prog-text">${im.idx + 1} / ${total}</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-num">問 ${q.id}</div>
+      ${q.image ? `<img class="q-img" src="${q.image}" alt="図${q.id}">` : ''}
+      <div class="q-text">${q.text}</div>
+    </div>
+
+    <div class="intro-answer">
+      <div class="intro-answer-label">✅ 解答</div>
+      <div class="intro-answer-text">${q.choices[0]}</div>
+      <div class="intro-expl"><span class="intro-expl-icon">💡</span>${expl}</div>
+    </div>
+
+    <button class="next-btn" onclick="nextIntroQ()">
+      ${im.idx + 1 < total ? '次の問題 →' : '✅ セクション修了 →'}
+    </button>`;
+  doMath(el);
+}
+
+function nextIntroQ() {
+  im.idx++;
+  renderIntro(SECTIONS.find(s => s.id === curSec));
+}
+
+function renderIntroDone(sec) {
+  document.getElementById('content').innerHTML = `
+    <div class="done-card">
+      <div class="done-icon">🎓</div>
+      <div class="done-title">${sec.label}（${sec.subtitle}）の学習が終わりました</div>
+      <div class="done-sub">全 ${sec.questions.length} 問を確認しました。次は自習モードで理解度を確かめましょう。</div>
+      <div class="done-actions">
+        <button class="next-btn" onclick="restartIntro()">🔄 もう一度読み直す</button>
+        <button class="next-btn" style="background:#059669;" onclick="setMode('study')">📖 自習モードへ進む</button>
+      </div>
+    </div>`;
+}
+
+function restartIntro() {
+  im.idx = 0;
+  renderIntro(SECTIONS.find(s => s.id === curSec));
 }
 
 // ============================================================
@@ -1184,7 +1269,7 @@ async function trySend(btn, attempt) {
 // ============================================================
 document.addEventListener('DOMContentLoaded', ()=>{
   buildTabs();
-  document.getElementById('modeStudy').classList.add('active');
+  document.getElementById('modeIntro').classList.add('active');
   render();
 });
 </script>
